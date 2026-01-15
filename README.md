@@ -36,6 +36,6 @@ coding!
 
 - Teammate name #1: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)
 - Shimin Chan: [Github](https://github.com/Natkuma01) / [LinkedIn](https://linkedin.com/in/natalie-chan-shimin/)
-
+- Yusuf Mohsen: [Github](https://github.com/yusufmohsiin) / [LinkedIn](https://www.linkedin.com/in/yusuf-mohsiin/)
    ...
 - Teammate name #n: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)
