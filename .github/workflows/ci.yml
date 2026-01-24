@@ -19,8 +19,11 @@ jobs:
       - name: Run tests
         run: npm test
 
-      - name: Lint code
-        run: npm run lint
+      - name: Code formatting
+        run: npm run format
+
+      - name: Biome lint checking
+        run: npm run biome:check
 
       - name: Build project
         run: npm run build
