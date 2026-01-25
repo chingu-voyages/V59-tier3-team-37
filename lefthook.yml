@@ -44,7 +44,7 @@
 pre-commit:
   jobs:
     - name: Code formatting
-      run: npm run format
+      run: npm run biome:format
     
     - name: Biome lint checking
       run: npm run biome:check
