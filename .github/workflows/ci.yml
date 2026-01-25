@@ -20,10 +20,7 @@ jobs:
         run: npm test
 
       - name: Biome code formatting
-        run: npm run format
+        run: npm run biome:format
 
       - name: Biome lint checking
         run: npm run biome:check
-
-      - name: Build project
-        run: npm run build

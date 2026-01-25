@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest",
-    "format": "biome format --write .",
+    "biome:format": "biome format --write .",
     "biome:check": "biome check --fix ."
   },
   "dependencies": {
