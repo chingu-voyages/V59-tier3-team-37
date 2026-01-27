@@ -1,11 +1,12 @@
+import { Role } from '@/types'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 type SessionState = {
-  role: 'student' | 'teacher' | null
+  role: Role | null
   sessionStarted: boolean
 
-  setRole: (role: 'student' | 'teacher') => void
+  setRole: (role: Role) => void
   startSession: () => void
   resetSession: () => void
 }

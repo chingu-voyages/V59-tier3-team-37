@@ -2,12 +2,13 @@
 
 import { useSessionStore } from '@/store/useSessionStore'
 import { selectRole as selectRoleAction } from './actions'
+import { Role, ROLES } from '@/types'
 
 export default function RolePage() {
   const setRole = useSessionStore((s) => s.setRole)
   const startSession = useSessionStore((s) => s.startSession)
 
-  const selectRole = (role: 'student' | 'teacher') => {
+  const selectRole = (role: Role) => {
     setRole(role)
     selectRoleAction(role)
     startSession()
@@ -20,15 +21,15 @@ export default function RolePage() {
       <button 
       className='bg-red-300 p-2 m-3 rounded'
       type='button'
-      onClick={() => selectRole('student')}>
-        Student
+      onClick={() => selectRole(ROLES.FRONTEND)}>
+        Frontend
       </button>
 
       <button 
       className='bg-red-300 p-2 m-3 rounded'
       type='button'
-      onClick={() => selectRole('teacher')}>
-        Teacher
+      onClick={() => selectRole(ROLES.BACKEND)}>
+        Backend
       </button>
     </div>
   )
