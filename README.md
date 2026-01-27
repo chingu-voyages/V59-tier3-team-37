@@ -34,3 +34,13 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+- Gerwyn Sim : [GitHub](https://github.com/Gerwyn1) / [LinkedIn](
+https://www.linkedin.com/in/gerwyn-sim-391305239/)
+- Bisola Ogunsina : [GitHub](https://github.com/skellynb) / [LinkedIn](https://www.linkedin.com/in/bisola-s-ogunsina/)
+- Shimin Chan: [Github](https://github.com/Natkuma01) / [LinkedIn](https://linkedin.com/in/natalie-chan-shimin/)
+-Maheswari Kumar : [Github](https://github.com/MaheswariKumar) / [LinkedIn](https://www.linkedin.com/in/maheswari5kumar/)
+- Yusuf Mohsen: [Github](https://github.com/yusufmohsiin) / [LinkedIn](https://www.linkedin.com/in/yusuf-mohsiin/)
+- Fouad Tabbara: [Github](https://github.com/fmtabbara) / [LinkedIn](https://www.linkedin.com/in/fouad-tabbara-1b754461/)
+- Tonia Montgomery: [Github](https://github.com/MontgomeryT7294) / [LinkedIn](https://linkedin.com/in/tonia-montgomery/)
