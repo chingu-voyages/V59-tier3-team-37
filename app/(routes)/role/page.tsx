@@ -1,36 +1,38 @@
-'use client'
+"use client";
 
-import { useSessionStore } from '@/store/useSessionStore'
-import { selectRole as selectRoleAction } from './actions'
-import { Role, ROLES } from '@/types'
+import { useSessionStore } from "@/store/useSessionStore";
+import { ROLES, type Role } from "@/types";
+import { selectRole as selectRoleAction } from "./actions";
 
 export default function RolePage() {
-  const setRole = useSessionStore((s) => s.setRole)
-  const startSession = useSessionStore((s) => s.startSession)
+  const setRole = useSessionStore((s) => s.setRole);
+  const startSession = useSessionStore((s) => s.startSession);
 
   const selectRole = (role: Role) => {
-    setRole(role)
-    selectRoleAction(role)
-    startSession()
-  }
+    setRole(role);
+    selectRoleAction(role);
+    startSession();
+  };
 
   return (
     <div>
       <h1>Select role</h1>
 
-      <button 
-      className='bg-red-300 p-2 m-3 rounded'
-      type='button'
-      onClick={() => selectRole(ROLES.FRONTEND)}>
+      <button
+        className="bg-red-300 p-2 m-3 rounded"
+        type="button"
+        onClick={() => selectRole(ROLES.FRONTEND)}
+      >
         Frontend
       </button>
 
-      <button 
-      className='bg-red-300 p-2 m-3 rounded'
-      type='button'
-      onClick={() => selectRole(ROLES.BACKEND)}>
+      <button
+        className="bg-red-300 p-2 m-3 rounded"
+        type="button"
+        onClick={() => selectRole(ROLES.BACKEND)}
+      >
         Backend
       </button>
     </div>
-  )
+  );
 }

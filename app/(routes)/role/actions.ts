@@ -1,8 +1,8 @@
 "use server";
 
-import { Role } from "@/types";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import type { Role } from "@/types";
 
 export async function selectRole(role: Role) {
   // Set the cookie (valid for 7 days, for example)
