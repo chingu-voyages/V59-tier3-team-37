@@ -51,7 +51,7 @@ export default function FlashcardsPage() {
 
             return (
               <button
-                type='button'
+                type="button"
                 key={opt.id}
                 className={style}
                 onClick={() => handleSelect(opt.id)}
@@ -72,7 +72,7 @@ export default function FlashcardsPage() {
 
       {selected && index < cards.length - 1 && (
         <button
-          type='button'
+          type="button"
           onClick={next}
           className="px-4 py-2 bg-black text-white rounded"
         >
