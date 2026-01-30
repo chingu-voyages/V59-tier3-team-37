@@ -4,11 +4,13 @@ import { persist } from "zustand/middleware";
 import rawFlashcards from "@/public/flashcards.json";
 import type { Flashcards, Role } from "@/types";
 import { FlashcardsSchema } from "@/types";
+import { redirect } from "next/navigation";
 
 type SessionState = {
-  role: Role | null;
+  role: Role | undefined;
   roles: Role[] | [];
   sessionStarted: boolean;
+  resettingSession: boolean;
   darkMode: boolean;
   flashcards: z.infer<typeof FlashcardsSchema>;
   flashCardError: string | null;
@@ -17,6 +19,7 @@ type SessionState = {
   setRole: (role: Role) => void;
   startSession: () => void;
   resetSession: () => void;
+  setResettingSession: () => void;
   setDarkMode: (value: boolean) => void;
   toggleDarkMode: () => void;
   loadFlashcards: () => void;
@@ -27,30 +30,41 @@ type SessionState = {
 export const useSessionStore = create<SessionState>()(
   persist(
     (set, get) => ({
-      role: "fullstack",
+      role: undefined,
       roles: [],
       sessionStarted: false,
+      resettingSession: false,
       darkMode: false,
       flashcards: [],
       flashCardError: null,
-      questionCount: 10,
+      questionCount: 10, // will still display only 5 questions per category because data set only have 5 per category
 
       toggleDarkMode: () => set((state) => ({ darkMode: !state.darkMode })),
       setDarkMode: (value) => set({ darkMode: value }),
       setRole: (role) => set({ role }),
       startSession: () => set({ sessionStarted: true }),
-      resetSession: () => set({ role: null, sessionStarted: false }),
+      resetSession: () => {
+        set({
+          role: undefined,
+          sessionStarted: false,
+          resettingSession:true,
+          flashcards: [],
+          flashCardError: null,
+        })
+        redirect('/roles')
+        
+      },
+      setResettingSession: () => set({ resettingSession: false }),
       loadFlashcards: () => {
         try {
           const result = FlashcardsSchema.safeParse(rawFlashcards);
-
+          
           if (!result.success) {
             console.error(z.treeifyError(result.error));
             throw new Error("Invalid flashcards JSON");
           }
           const filtered = result.data.filter((q) => q.role === get().role);
           const cards = get().shuffleCards(filtered, get().questionCount);
-
           set({ flashcards: cards, flashCardError: null });
         } catch (err) {
           if (err instanceof z.ZodError) {
