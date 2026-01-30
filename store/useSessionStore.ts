@@ -7,6 +7,7 @@ import { FlashcardsSchema } from "@/types";
 
 type SessionState = {
   role: Role | null;
+  roles: Role[] | [];
   sessionStarted: boolean;
   darkMode: boolean;
   flashcards: z.infer<typeof FlashcardsSchema>;
@@ -20,12 +21,14 @@ type SessionState = {
   toggleDarkMode: () => void;
   loadFlashcards: () => void;
   shuffleCards: (filtered: Flashcards, count: number) => Flashcards;
+  getAvailableRoles: () => void;
 };
 
 export const useSessionStore = create<SessionState>()(
   persist(
     (set, get) => ({
       role: "fullstack",
+      roles: [],
       sessionStarted: false,
       darkMode: false,
       flashcards: [],
@@ -74,7 +77,7 @@ export const useSessionStore = create<SessionState>()(
         }
         return shuffled.slice(0, count);
       },
-      getAvailableRoles(): Role[] {
+      getAvailableRoles: () => {
         const result = FlashcardsSchema.safeParse(rawFlashcards);
         if (!result.success) {
           console.error(
@@ -85,8 +88,8 @@ export const useSessionStore = create<SessionState>()(
         }
 
         const roles = Array.from(new Set(result.data.map((card) => card.role)));
-
-        return roles;
+        if (roles) set({ roles });
+        else set({ roles: [] });
       },
     }),
     {

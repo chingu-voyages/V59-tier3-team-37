@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -10,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useSessionStore } from "@/store/useSessionStore";
 
 interface RoleOption {
   value: string;
@@ -39,6 +41,14 @@ export function RoleSelect({
     setSelectedValue(value);
     onValueChange?.(value);
   };
+
+  //   const router = useRouter();
+
+  // const {role, setRole, getAvailableRoles, roles} = useSessionStore();
+
+  //        useEffect(() => {
+  //     getAvailableRoles();
+  //   }, [getAvailableRoles]);
 
   return (
     <Select value={selectedValue} onValueChange={handleValueChange}>
