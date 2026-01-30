@@ -1,10 +1,10 @@
+import { redirect } from "next/navigation";
 import z from "zod";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import rawFlashcards from "@/public/flashcards.json";
 import type { Flashcards, Role } from "@/types";
 import { FlashcardsSchema } from "@/types";
-import { redirect } from "next/navigation";
 
 type SessionState = {
   role: Role | undefined;
@@ -47,18 +47,17 @@ export const useSessionStore = create<SessionState>()(
         set({
           role: undefined,
           sessionStarted: false,
-          resettingSession:true,
+          resettingSession: true,
           flashcards: [],
           flashCardError: null,
-        })
-        redirect('/roles')
-        
+        });
+        setTimeout(() => redirect("/roles") , 2000)
       },
       setResettingSession: () => set({ resettingSession: false }),
       loadFlashcards: () => {
         try {
           const result = FlashcardsSchema.safeParse(rawFlashcards);
-          
+
           if (!result.success) {
             console.error(z.treeifyError(result.error));
             throw new Error("Invalid flashcards JSON");

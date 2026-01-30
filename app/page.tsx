@@ -1,4 +1,3 @@
-
 import HowItWorks from "@/components/home/HowItWorks";
 
 // (migrated to zustand)
