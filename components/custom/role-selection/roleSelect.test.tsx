@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { beforeAll, describe, expect, test,vi } from "vitest";
+import { beforeAll, describe, expect, test, vi } from "vitest";
 import { RoleSelect } from "./RoleSelector";
 
 vi.mock("next/navigation", () => ({
@@ -9,7 +9,7 @@ vi.mock("next/navigation", () => ({
     refresh: vi.fn(),
     back: vi.fn(),
   }),
-}))
+}));
 
 const options = [
   { value: "admin", label: "Administrator" },
