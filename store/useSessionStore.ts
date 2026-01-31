@@ -89,6 +89,7 @@ export const useSessionStore = create<SessionState>()(
         try {
           set({ flashcardsLoading: true });
           const result = FlashcardsSchema.safeParse(rawFlashcards);
+
           if (!result.success) {
             console.error(z.treeifyError(result.error));
             throw new Error("Invalid flashcards JSON");
@@ -152,6 +153,7 @@ export const useSessionStore = create<SessionState>()(
       onRehydrateStorage: () => (state) => {
         state?.setHasHydrated();
       },
-    },
+
+      },
   ),
 );

@@ -10,7 +10,7 @@ export function WarningModal({
       <span>⚠️ {message}</span>
       {onClose && (
         <button
-        type='button'
+          type="button"
           onClick={onClose}
           className="ml-4 font-bold text-red-700 hover:text-red-900"
         >
