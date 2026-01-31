@@ -1,7 +1,8 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Spinner from "@/components/custom/Spinner";
 import { Button } from "@/components/ui/button";
 import { useSessionStore } from "@/store/useSessionStore";
 
@@ -9,14 +10,25 @@ export default function QuestionsPage() {
   const {
     flashcards: cards,
     loadFlashcards,
+    startSession,
     resetSession,
     resettingSession,
+    sessionStarted,
+    role,
   } = useSessionStore();
   const router = useRouter();
+  const pathname = usePathname();
+  const isQuestionsPage = pathname === "/questions";
 
   useEffect(() => {
     loadFlashcards();
   }, [loadFlashcards]);
+
+  useEffect(() => {
+    if (role && isQuestionsPage) {
+      startSession();
+    }
+  }, [role, isQuestionsPage, startSession]);
 
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
@@ -25,24 +37,23 @@ export default function QuestionsPage() {
 
   if (resettingSession) {
     return (
-    <div className="flex min-h-screen flex-col items-center justify-start space-y-4 bg-gray-50 dark:bg-black text-center px-4">
-      <div className="animate-spin w-12 h-12 text-blue-600 dark:text-blue-400" />
-      <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
-        Resetting session...
-      </h2>
-      <p className="text-gray-600 dark:text-gray-400 max-w-sm">
-        Please wait a moment while we clear your previous session and redirect
-        you to the role selection page.
-      </p>
-    </div>
-    )
+      <div className="flex min-h-screen flex-col items-center justify-start space-y-4 bg-gray-50 dark:bg-black text-center px-4">
+        <div className="animate-spin w-12 h-12 text-blue-600 dark:text-blue-400" />
+        <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+          Resetting session...
+        </h2>
+        <p className="text-gray-600 dark:text-gray-400 max-w-sm">
+          Please wait a moment while we clear your previous session and redirect
+          you to the role selection page.
+        </p>
+      </div>
+    );
   }
 
-  if (!current) {
+  if (!role) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center text-center space-y-4 px-4">
         <h2 className="text-2xl font-semibold">No role selected</h2>
-
         <p className="text-muted-foreground max-w-md">
           Please choose a role before starting the flashcards so we can show you
           relevant questions.
@@ -53,6 +64,10 @@ export default function QuestionsPage() {
         </Button>
       </div>
     );
+  }
+
+  if (!cards.length) {
+    return <Spinner />;
   }
 
   function handleSelect(id: string) {

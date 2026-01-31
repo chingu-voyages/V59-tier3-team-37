@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import { redirect } from "next/navigation";
 import z from "zod";
 import { create } from "zustand";
@@ -10,6 +11,7 @@ type SessionState = {
   role: Role | undefined;
   roles: Role[] | [];
   sessionStarted: boolean;
+  sessionEnded: boolean;
   resettingSession: boolean;
   darkMode: boolean;
   flashcards: z.infer<typeof FlashcardsSchema>;
@@ -33,6 +35,7 @@ export const useSessionStore = create<SessionState>()(
       role: undefined,
       roles: [],
       sessionStarted: false,
+      sessionEnded: false,
       resettingSession: false,
       darkMode: false,
       flashcards: [],
@@ -42,7 +45,12 @@ export const useSessionStore = create<SessionState>()(
       toggleDarkMode: () => set((state) => ({ darkMode: !state.darkMode })),
       setDarkMode: (value) => set({ darkMode: value }),
       setRole: (role) => set({ role }),
-      startSession: () => set({ sessionStarted: true }),
+      startSession: () => {
+        set({ sessionStarted: true });
+        Cookies.set("sessionStarted", "true", { path: "/" });
+        Cookies.set("sessionEnded", "false", { path: "/" });
+        alert("Session started!");
+      },
       resetSession: () => {
         set({
           role: undefined,
@@ -50,10 +58,13 @@ export const useSessionStore = create<SessionState>()(
           resettingSession: true,
           flashcards: [],
           flashCardError: null,
+          sessionEnded: !get().sessionEnded,
         });
-        setTimeout(() => redirect("/roles") , 2000)
+        setTimeout(() => redirect("/roles"), 2000);
       },
       setResettingSession: () => set({ resettingSession: false }),
+      setSessionEnded: () =>
+        set((state) => ({ sessionEnded: !state.sessionEnded })),
       loadFlashcards: () => {
         try {
           const result = FlashcardsSchema.safeParse(rawFlashcards);

@@ -141,3 +141,10 @@
     transform: rotate(360deg);
   }
 }
+
+.disabled-link {
+  pointer-events: none; /* Disables mouse clicks */
+  cursor: default; /* Changes cursor appearance */
+  opacity: 0.5; /* Optional: visually indicates a disabled state */
+  background: none;
+}

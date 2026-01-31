@@ -4,7 +4,7 @@ import { RoleSelect } from "@/components/custom/role-selection/RoleSelector";
 
 const Roles = () => {
   return (
-    <div className="">
+    <div>
       <RoleSelect
         label="Choose your role"
         placeholder="Pick a role"

@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useSessionStore } from "@/store/useSessionStore";
 
 interface NavLink {
   href: string;
@@ -23,8 +26,10 @@ const Header: React.FC = () => {
 
   const formattedDate = currentDate.toLocaleDateString("en-US", options);
 
+  const { sessionStarted, sessionEnded } = useSessionStore();
+
   return (
-    <header className="border-b border-gray-200 bg-white dark:bg-black px-[15px] py-[15px] flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+    <header className="border-b border-gray-200 bg-white dark:bg-black px-3.75 py-3.75 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
       {/* Logo / App Name */}
       <div>
         <Link href="/">
@@ -49,7 +54,7 @@ const Header: React.FC = () => {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="transition-colors duration-200 hover:text-emerald-500"
+                  className={`transition-colors duration-200 hover:text-emerald-500 ${sessionStarted && !sessionEnded && "disabled-link"}`}
                 >
                   {link.label}
                 </Link>
