@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useSessionStore } from "@/store/useSessionStore";
 import { usePathname } from "next/navigation";
+import { useSessionStore } from "@/store/useSessionStore";
 
 interface NavLink {
   href: string;
@@ -28,7 +28,7 @@ const Header: React.FC = () => {
   const formattedDate = currentDate.toLocaleDateString("en-US", options);
 
   const pathname = usePathname();
-  const { sessionStarted,  } = useSessionStore();
+  const { sessionStarted } = useSessionStore();
 
   return (
     <header className="border-b border-gray-200 bg-white dark:bg-black px-3.75 py-3.75 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
@@ -56,7 +56,7 @@ const Header: React.FC = () => {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className={`transition-colors duration-200 hover:text-emerald-500 ${(sessionStarted || pathname === '/questions') && "disabled-link"}`}
+                  className={`transition-colors duration-200 hover:text-emerald-500 ${(sessionStarted || pathname === "/questions") && "disabled-link"}`}
                 >
                   {link.label}
                 </Link>

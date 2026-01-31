@@ -10,7 +10,7 @@ import { FlashcardsSchema } from "@/types";
 type SessionState = {
   role: Role | undefined;
   roles: Role[] | [];
-  sessionStarted: boolean;
+  sessionStarted: boolean | null;
   sessionEnded: boolean | null;
   resettingSession: boolean;
   darkMode: boolean;
@@ -19,8 +19,9 @@ type SessionState = {
   flashcardsLoading: boolean;
   questionCount: number;
   hasHydrated: boolean;
-  questionIndex:number;
+  questionIndex: number;
   selectedAnswer: string | null;
+  showWarning: boolean;
 
   setRole: (role: Role) => void;
   startSession: () => void;
@@ -35,6 +36,7 @@ type SessionState = {
   setQuestionIndex: () => void;
   setSelectedAnswer: (answer: string | null) => void;
   setSessionEnded: () => void;
+  setShowWarning: (warning: boolean) => void;
 };
 
 export const useSessionStore = create<SessionState>()(
@@ -42,7 +44,7 @@ export const useSessionStore = create<SessionState>()(
     (set, get) => ({
       role: undefined,
       roles: [],
-      sessionStarted: false,
+      sessionStarted: null,
       sessionEnded: null,
       resettingSession: false,
       darkMode: false,
@@ -53,20 +55,21 @@ export const useSessionStore = create<SessionState>()(
       hasHydrated: false,
       questionIndex: 0,
       selectedAnswer: null,
+      showWarning: false,
 
       toggleDarkMode: () => set((state) => ({ darkMode: !state.darkMode })),
       setDarkMode: (value) => set({ darkMode: value }),
       setRole: (role) => set({ role }),
       startSession: () => {
+        const sessionAlreadyStarted = get().sessionStarted;
+        if (sessionAlreadyStarted) return;
         set({ sessionStarted: true });
         Cookies.set("sessionStarted", "true", { path: "/" });
-        Cookies.set("sessionEnded", "false", { path: "/" });
-        // alert("Session started!");
       },
       resetSession: () => {
         set({
           role: undefined,
-          sessionStarted: false,
+          sessionStarted: null,
           resettingSession: true,
           flashcards: [],
           flashCardError: null,
@@ -74,16 +77,18 @@ export const useSessionStore = create<SessionState>()(
           questionIndex: 0,
           selectedAnswer: null,
         });
+        Cookies.set("sessionStarted", "false", { path: "/" });
         setTimeout(() => redirect("/roles"), 1500);
       },
       setResettingSession: () => set({ resettingSession: false }),
-      setSessionEnded: () => set({ sessionEnded: true }),
-      loadFlashcards: async () => {
+      setSessionEnded: () => set({ sessionEnded: true, showWarning: false }),
+      loadFlashcards: () => {
+        // Don’t reshuffle if already loaded
+        if (get().flashcards.length > 0) return;
+
         try {
           set({ flashcardsLoading: true });
           const result = FlashcardsSchema.safeParse(rawFlashcards);
-          console.log(result);
-
           if (!result.success) {
             console.error(z.treeifyError(result.error));
             throw new Error("Invalid flashcards JSON");
@@ -136,8 +141,11 @@ export const useSessionStore = create<SessionState>()(
         else set({ roles: [] });
       },
       setHasHydrated: () => set({ hasHydrated: true }),
-      setQuestionIndex: () => set((state) => ({ questionIndex: state.questionIndex + 1 })),
-      setSelectedAnswer: (answer : string | null) => set({selectedAnswer : answer})
+      setQuestionIndex: () =>
+        set((state) => ({ questionIndex: state.questionIndex + 1 })),
+      setSelectedAnswer: (answer: string | null) =>
+        set({ selectedAnswer: answer }),
+      setShowWarning: (warning: boolean) => set({ showWarning: warning }),
     }),
     {
       name: "session-store", // saved in localStorage

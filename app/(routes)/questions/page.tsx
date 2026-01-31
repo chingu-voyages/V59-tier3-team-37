@@ -1,8 +1,9 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import Spinner from "@/components/custom/Spinner";
+import { WarningModal } from "@/components/custom/WarningModal";
 import { Button } from "@/components/ui/button";
 import { useSessionStore } from "@/store/useSessionStore";
 
@@ -21,7 +22,9 @@ export default function QuestionsPage() {
     questionIndex,
     setQuestionIndex,
     selectedAnswer,
-    setSelectedAnswer
+    setSelectedAnswer,
+    showWarning,
+    setShowWarning,
   } = useSessionStore();
   const router = useRouter();
   const pathname = usePathname();
@@ -29,7 +32,18 @@ export default function QuestionsPage() {
 
   const currentQuestion = flashcards[questionIndex];
   const moreQuestionsToBeDone = questionIndex < flashcards?.length - 1;
-  const completedAllQuestions = questionIndex === flashcards?.length - 1;
+  const completedAllQuestions =
+    selectedAnswer && questionIndex === flashcards?.length - 1;
+
+  const searchParams = useSearchParams();
+  const warning = searchParams.get("warning");
+
+  useEffect(() => {
+    console.log("warning", warning);
+    if (warning === "finish-questions") {
+      setShowWarning(true);
+    }
+  }, [warning, setShowWarning]);
 
   useEffect(() => {
     if (role) {
@@ -43,18 +57,14 @@ export default function QuestionsPage() {
     }
   }, [role, isQuestionsPage, startSession]);
 
-    useEffect(() => {
-      if (completedAllQuestions) {
-        setSessionEnded()
-      }
-  }, [setSessionEnded, completedAllQuestions])
+  useEffect(() => {
+    if (completedAllQuestions) {
+      setSessionEnded();
+    }
+  }, [setSessionEnded, completedAllQuestions]);
 
-  if (!hasHydrated) {
-    return <Spinner />;
-  }
-
-  // not sure if this is still needed (will double check)
-  if (flashcardsLoading) {
+  if (!hasHydrated || flashcardsLoading) {
+    // restoring saved state or fetching/preparing data
     return <Spinner />;
   }
 
@@ -95,17 +105,27 @@ export default function QuestionsPage() {
 
   function next() {
     setSelectedAnswer(null);
-    setQuestionIndex()
+    setQuestionIndex();
   }
+  console.log("SHOW WARNING:");
+  console.log(showWarning);
 
   return (
     <div className="min-h-screen p-6 flex flex-col items-center gap-6">
+      {showWarning && (
+        <WarningModal
+          message="You must finish your current questions before navigating away!"
+          onClose={() => setShowWarning(false)} // optional dismiss
+        />
+      )}
       <div className="max-w-xl w-full border rounded-lg p-6 shadow">
         <p className="text-sm opacity-60">
           Question {questionIndex + 1} / {flashcards.length}
         </p>
 
-        <h2 className="text-xl font-semibold mt-2">{currentQuestion?.question}</h2>
+        <h2 className="text-xl font-semibold mt-2">
+          {currentQuestion?.question}
+        </h2>
 
         <div className="mt-4 flex flex-col gap-2">
           {currentQuestion?.options.map((opt) => {
@@ -140,7 +160,7 @@ export default function QuestionsPage() {
         )}
       </div>
 
-      {selectedAnswer &&  moreQuestionsToBeDone && (
+      {selectedAnswer && moreQuestionsToBeDone && (
         <button
           type="button"
           onClick={next}
@@ -150,7 +170,7 @@ export default function QuestionsPage() {
         </button>
       )}
 
-      {selectedAnswer && completedAllQuestions && sessionEnded && (
+      {completedAllQuestions && sessionEnded && (
         <>
           <p className="font-semibold">🎉 Done!</p>
           <Button variant="outline" onClick={resetSession} className="mt-4">
