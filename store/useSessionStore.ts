@@ -16,7 +16,9 @@ type SessionState = {
   darkMode: boolean;
   flashcards: z.infer<typeof FlashcardsSchema>;
   flashCardError: string | null;
+  flashcardsLoading: boolean;
   questionCount: number;
+  hasHydrated: boolean;
 
   setRole: (role: Role) => void;
   startSession: () => void;
@@ -27,6 +29,7 @@ type SessionState = {
   loadFlashcards: () => void;
   shuffleCards: (filtered: Flashcards, count: number) => Flashcards;
   getAvailableRoles: () => void;
+  setHasHydrated: () => void,
 };
 
 export const useSessionStore = create<SessionState>()(
@@ -40,7 +43,9 @@ export const useSessionStore = create<SessionState>()(
       darkMode: false,
       flashcards: [],
       flashCardError: null,
+      flashcardsLoading: false,
       questionCount: 10, // will still display only 5 questions per category because data set only have 5 per category
+      hasHydrated: false,
 
       toggleDarkMode: () => set((state) => ({ darkMode: !state.darkMode })),
       setDarkMode: (value) => set({ darkMode: value }),
@@ -49,7 +54,7 @@ export const useSessionStore = create<SessionState>()(
         set({ sessionStarted: true });
         Cookies.set("sessionStarted", "true", { path: "/" });
         Cookies.set("sessionEnded", "false", { path: "/" });
-        alert("Session started!");
+        // alert("Session started!");
       },
       resetSession: () => {
         set({
@@ -65,9 +70,14 @@ export const useSessionStore = create<SessionState>()(
       setResettingSession: () => set({ resettingSession: false }),
       setSessionEnded: () =>
         set((state) => ({ sessionEnded: !state.sessionEnded })),
-      loadFlashcards: () => {
+      loadFlashcards: async () => {
         try {
+          set({ flashcardsLoading: true })
+
+           await new Promise(resolve => setTimeout(resolve, 0))
+          console.log(get().flashcardsLoading)
           const result = FlashcardsSchema.safeParse(rawFlashcards);
+          console.log(result)
 
           if (!result.success) {
             console.error(z.treeifyError(result.error));
@@ -75,8 +85,9 @@ export const useSessionStore = create<SessionState>()(
           }
           const filtered = result.data.filter((q) => q.role === get().role);
           const cards = get().shuffleCards(filtered, get().questionCount);
-          set({ flashcards: cards, flashCardError: null });
+          set({ flashcards: cards, flashCardError: null, flashcardsLoading: false});
         } catch (err) {
+          set({ flashcardsLoading: false })
           if (err instanceof z.ZodError) {
             const message = err.issues
               .map((e) => `${e.path.join(".")}: ${e.message}`)
@@ -115,9 +126,13 @@ export const useSessionStore = create<SessionState>()(
         if (roles) set({ roles });
         else set({ roles: [] });
       },
+      setHasHydrated: () => set({ hasHydrated: true }),
     }),
     {
       name: "session-store", // saved in localStorage
+      onRehydrateStorage: () => (state) => {
+        state?.setHasHydrated()
+      }
     },
   ),
 );

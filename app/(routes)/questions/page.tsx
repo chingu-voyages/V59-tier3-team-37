@@ -13,16 +13,20 @@ export default function QuestionsPage() {
     startSession,
     resetSession,
     resettingSession,
-    sessionStarted,
+    flashcardsLoading,
+    hasHydrated,
     role,
   } = useSessionStore();
+  console.log(flashcardsLoading)
   const router = useRouter();
   const pathname = usePathname();
   const isQuestionsPage = pathname === "/questions";
 
   useEffect(() => {
+    if (role) {
     loadFlashcards();
-  }, [loadFlashcards]);
+  }
+  }, [loadFlashcards, role]);
 
   useEffect(() => {
     if (role && isQuestionsPage) {
@@ -34,6 +38,10 @@ export default function QuestionsPage() {
   const [selected, setSelected] = useState<string | null>(null);
 
   const current = cards[index];
+
+if (!hasHydrated) {
+  return <Spinner />
+}
 
   if (resettingSession) {
     return (
@@ -48,6 +56,10 @@ export default function QuestionsPage() {
         </p>
       </div>
     );
+  }
+
+   if (flashcardsLoading) {
+    return <Spinner />;
   }
 
   if (!role) {
@@ -66,9 +78,7 @@ export default function QuestionsPage() {
     );
   }
 
-  if (!cards.length) {
-    return <Spinner />;
-  }
+ 
 
   function handleSelect(id: string) {
     setSelected(id);
@@ -86,10 +96,10 @@ export default function QuestionsPage() {
           Question {index + 1} / {cards.length}
         </p>
 
-        <h2 className="text-xl font-semibold mt-2">{current.question}</h2>
+        <h2 className="text-xl font-semibold mt-2">{current?.question}</h2>
 
         <div className="mt-4 flex flex-col gap-2">
-          {current.options.map((opt) => {
+          {current?.options.map((opt) => {
             const isCorrect = opt.isCorrect;
             const isSelected = selected === opt.id;
 
