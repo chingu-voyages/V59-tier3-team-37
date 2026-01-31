@@ -153,7 +153,6 @@ export const useSessionStore = create<SessionState>()(
       onRehydrateStorage: () => (state) => {
         state?.setHasHydrated();
       },
-
-      },
+    },
   ),
 );
