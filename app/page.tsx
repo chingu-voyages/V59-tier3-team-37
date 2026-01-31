@@ -1,5 +1,13 @@
 import HowItWorks from "@/components/home/HowItWorks";
 
+// (migrated to zustand)
+// const roleOptions = [
+//   { value: "frontend", label: "Frontend Developer" },
+//   { value: "backend", label: "Backend Developer" },
+//   { value: "fullstack", label: "Full Stack Developer" },
+//   { value: "designer", label: "UI/UX Designer" },
+// ];
+
 export default function Home() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
