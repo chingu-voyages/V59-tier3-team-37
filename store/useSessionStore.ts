@@ -11,7 +11,7 @@ type SessionState = {
   role: Role | undefined;
   roles: Role[] | [];
   sessionStarted: boolean;
-  sessionEnded: boolean;
+  sessionEnded: boolean | null;
   resettingSession: boolean;
   darkMode: boolean;
   flashcards: z.infer<typeof FlashcardsSchema>;
@@ -19,6 +19,8 @@ type SessionState = {
   flashcardsLoading: boolean;
   questionCount: number;
   hasHydrated: boolean;
+  questionIndex:number;
+  selectedAnswer: string | null;
 
   setRole: (role: Role) => void;
   startSession: () => void;
@@ -29,7 +31,10 @@ type SessionState = {
   loadFlashcards: () => void;
   shuffleCards: (filtered: Flashcards, count: number) => Flashcards;
   getAvailableRoles: () => void;
-  setHasHydrated: () => void,
+  setHasHydrated: () => void;
+  setQuestionIndex: () => void;
+  setSelectedAnswer: (answer: string | null) => void;
+  setSessionEnded: () => void;
 };
 
 export const useSessionStore = create<SessionState>()(
@@ -38,7 +43,7 @@ export const useSessionStore = create<SessionState>()(
       role: undefined,
       roles: [],
       sessionStarted: false,
-      sessionEnded: false,
+      sessionEnded: null,
       resettingSession: false,
       darkMode: false,
       flashcards: [],
@@ -46,6 +51,8 @@ export const useSessionStore = create<SessionState>()(
       flashcardsLoading: false,
       questionCount: 10, // will still display only 5 questions per category because data set only have 5 per category
       hasHydrated: false,
+      questionIndex: 0,
+      selectedAnswer: null,
 
       toggleDarkMode: () => set((state) => ({ darkMode: !state.darkMode })),
       setDarkMode: (value) => set({ darkMode: value }),
@@ -63,21 +70,19 @@ export const useSessionStore = create<SessionState>()(
           resettingSession: true,
           flashcards: [],
           flashCardError: null,
-          sessionEnded: !get().sessionEnded,
+          sessionEnded: null,
+          questionIndex: 0,
+          selectedAnswer: null,
         });
-        setTimeout(() => redirect("/roles"), 2000);
+        setTimeout(() => redirect("/roles"), 1500);
       },
       setResettingSession: () => set({ resettingSession: false }),
-      setSessionEnded: () =>
-        set((state) => ({ sessionEnded: !state.sessionEnded })),
+      setSessionEnded: () => set({ sessionEnded: true }),
       loadFlashcards: async () => {
         try {
-          set({ flashcardsLoading: true })
-
-           await new Promise(resolve => setTimeout(resolve, 0))
-          console.log(get().flashcardsLoading)
+          set({ flashcardsLoading: true });
           const result = FlashcardsSchema.safeParse(rawFlashcards);
-          console.log(result)
+          console.log(result);
 
           if (!result.success) {
             console.error(z.treeifyError(result.error));
@@ -85,9 +90,13 @@ export const useSessionStore = create<SessionState>()(
           }
           const filtered = result.data.filter((q) => q.role === get().role);
           const cards = get().shuffleCards(filtered, get().questionCount);
-          set({ flashcards: cards, flashCardError: null, flashcardsLoading: false});
+          set({
+            flashcards: cards,
+            flashCardError: null,
+            flashcardsLoading: false,
+          });
         } catch (err) {
-          set({ flashcardsLoading: false })
+          set({ flashcardsLoading: false });
           if (err instanceof z.ZodError) {
             const message = err.issues
               .map((e) => `${e.path.join(".")}: ${e.message}`)
@@ -127,12 +136,14 @@ export const useSessionStore = create<SessionState>()(
         else set({ roles: [] });
       },
       setHasHydrated: () => set({ hasHydrated: true }),
+      setQuestionIndex: () => set((state) => ({ questionIndex: state.questionIndex + 1 })),
+      setSelectedAnswer: (answer : string | null) => set({selectedAnswer : answer})
     }),
     {
       name: "session-store", // saved in localStorage
       onRehydrateStorage: () => (state) => {
-        state?.setHasHydrated()
-      }
+        state?.setHasHydrated();
+      },
     },
   ),
 );

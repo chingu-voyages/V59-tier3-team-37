@@ -1,31 +1,40 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Spinner from "@/components/custom/Spinner";
 import { Button } from "@/components/ui/button";
 import { useSessionStore } from "@/store/useSessionStore";
 
 export default function QuestionsPage() {
   const {
-    flashcards: cards,
+    flashcards,
     loadFlashcards,
     startSession,
     resetSession,
+    sessionEnded,
+    setSessionEnded,
     resettingSession,
     flashcardsLoading,
     hasHydrated,
     role,
+    questionIndex,
+    setQuestionIndex,
+    selectedAnswer,
+    setSelectedAnswer
   } = useSessionStore();
-  console.log(flashcardsLoading)
   const router = useRouter();
   const pathname = usePathname();
   const isQuestionsPage = pathname === "/questions";
 
+  const currentQuestion = flashcards[questionIndex];
+  const moreQuestionsToBeDone = questionIndex < flashcards?.length - 1;
+  const completedAllQuestions = questionIndex === flashcards?.length - 1;
+
   useEffect(() => {
     if (role) {
-    loadFlashcards();
-  }
+      loadFlashcards();
+    }
   }, [loadFlashcards, role]);
 
   useEffect(() => {
@@ -34,14 +43,20 @@ export default function QuestionsPage() {
     }
   }, [role, isQuestionsPage, startSession]);
 
-  const [index, setIndex] = useState(0);
-  const [selected, setSelected] = useState<string | null>(null);
+    useEffect(() => {
+      if (completedAllQuestions) {
+        setSessionEnded()
+      }
+  }, [setSessionEnded, completedAllQuestions])
 
-  const current = cards[index];
+  if (!hasHydrated) {
+    return <Spinner />;
+  }
 
-if (!hasHydrated) {
-  return <Spinner />
-}
+  // not sure if this is still needed (will double check)
+  if (flashcardsLoading) {
+    return <Spinner />;
+  }
 
   if (resettingSession) {
     return (
@@ -56,10 +71,6 @@ if (!hasHydrated) {
         </p>
       </div>
     );
-  }
-
-   if (flashcardsLoading) {
-    return <Spinner />;
   }
 
   if (!role) {
@@ -78,34 +89,32 @@ if (!hasHydrated) {
     );
   }
 
- 
-
   function handleSelect(id: string) {
-    setSelected(id);
+    setSelectedAnswer(id);
   }
 
   function next() {
-    setSelected(null);
-    setIndex((i) => i + 1);
+    setSelectedAnswer(null);
+    setQuestionIndex()
   }
 
   return (
     <div className="min-h-screen p-6 flex flex-col items-center gap-6">
       <div className="max-w-xl w-full border rounded-lg p-6 shadow">
         <p className="text-sm opacity-60">
-          Question {index + 1} / {cards.length}
+          Question {questionIndex + 1} / {flashcards.length}
         </p>
 
-        <h2 className="text-xl font-semibold mt-2">{current?.question}</h2>
+        <h2 className="text-xl font-semibold mt-2">{currentQuestion?.question}</h2>
 
         <div className="mt-4 flex flex-col gap-2">
-          {current?.options.map((opt) => {
+          {currentQuestion?.options.map((opt) => {
             const isCorrect = opt.isCorrect;
-            const isSelected = selected === opt.id;
+            const isSelected = selectedAnswer === opt.id;
 
             let style = "border p-3 rounded cursor-pointer";
 
-            if (selected) {
+            if (selectedAnswer) {
               if (isCorrect) style += " bg-green-200";
               else if (isSelected) style += " bg-red-200";
             }
@@ -116,7 +125,7 @@ if (!hasHydrated) {
                 key={opt.id}
                 className={style}
                 onClick={() => handleSelect(opt.id)}
-                disabled={!!selected}
+                disabled={!!selectedAnswer}
               >
                 {opt.text}
               </button>
@@ -124,14 +133,14 @@ if (!hasHydrated) {
           })}
         </div>
 
-        {selected && (
+        {selectedAnswer && (
           <div className="mt-4 p-3 bg-gray-100 rounded">
-            <strong>Explanation:</strong> {current.explanation}
+            <strong>Explanation:</strong> {currentQuestion?.explanation}
           </div>
         )}
       </div>
 
-      {selected && index < cards.length - 1 && (
+      {selectedAnswer &&  moreQuestionsToBeDone && (
         <button
           type="button"
           onClick={next}
@@ -141,7 +150,7 @@ if (!hasHydrated) {
         </button>
       )}
 
-      {selected && index === cards.length - 1 && (
+      {selectedAnswer && completedAllQuestions && sessionEnded && (
         <>
           <p className="font-semibold">🎉 Done!</p>
           <Button variant="outline" onClick={resetSession} className="mt-4">
