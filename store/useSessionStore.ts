@@ -69,7 +69,6 @@ export const useSessionStore = create<SessionState>()(
       resetSession: () => {
         set({
           role: undefined,
-          sessionStarted: null,
           resettingSession: true,
           flashcards: [],
           flashCardError: null,
@@ -78,7 +77,10 @@ export const useSessionStore = create<SessionState>()(
           selectedAnswer: null,
         });
         Cookies.set("sessionStarted", "false", { path: "/" });
-        setTimeout(() => redirect("/roles"), 1500);
+        setTimeout(() => {
+          setTimeout(() => set({sessionStarted: null}), 250);
+          redirect("/roles");
+        }, 1500);
       },
       setResettingSession: () => set({ resettingSession: false }),
       setSessionEnded: () => set({ sessionEnded: true, showWarning: false }),
