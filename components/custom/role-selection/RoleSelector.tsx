@@ -44,11 +44,6 @@ export function RoleSelect({
   const { role, setRole, getAvailableRoles, roles, setResettingSession } =
     useSessionStore();
 
-  const handleValueChange = (value: Role) => {
-    setRole(value);
-    onValueChange?.(value);
-  };
-
   useEffect(() => {
     setResettingSession();
     getAvailableRoles();
@@ -56,7 +51,7 @@ export function RoleSelect({
 
   return (
     <div className="max-w-48 space-y-4 mx-auto mt-8">
-      <Select value={role ?? undefined} onValueChange={handleValueChange}>
+      <Select value={role ?? ""} onValueChange={setRole}>
         <SelectTrigger className="w-full">
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
@@ -65,7 +60,7 @@ export function RoleSelect({
             {label && <SelectLabel>{label}</SelectLabel>}
             {roles.map((option) => (
               <SelectItem key={option} value={option}>
-                {option.charAt(0).toUpperCase() + option.slice(1)}
+                {option}
               </SelectItem>
             ))}
           </SelectGroup>

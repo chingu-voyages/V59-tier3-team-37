@@ -39,7 +39,6 @@ export default function QuestionsPage() {
   const warning = searchParams.get("warning");
 
   useEffect(() => {
-    console.log("warning", warning);
     if (warning === "finish-questions") {
       setShowWarning(true);
     }
@@ -107,8 +106,6 @@ export default function QuestionsPage() {
     setSelectedAnswer(null);
     setQuestionIndex();
   }
-  console.log("SHOW WARNING:");
-  console.log(showWarning);
 
   return (
     <div className="min-h-screen p-6 flex flex-col items-center gap-6">

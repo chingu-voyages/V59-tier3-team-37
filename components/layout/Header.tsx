@@ -56,7 +56,7 @@ const Header: React.FC = () => {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className={`transition-colors duration-200 hover:text-emerald-500 ${(sessionStarted && pathname === "/questions") && "disabled-link"}`}
+                  className={`transition-colors duration-200 hover:text-emerald-500 ${sessionStarted && pathname === "/questions" && "disabled-link"}`}
                 >
                   {link.label}
                 </Link>

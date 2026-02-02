@@ -8,8 +8,8 @@ import type { Flashcards, Role } from "@/types";
 import { FlashcardsSchema } from "@/types";
 
 type SessionState = {
-  role: Role | undefined;
-  roles: Role[] | [];
+  role: Role | string | null | undefined;
+  roles: Role[] | string[];
   sessionStarted: boolean | null;
   sessionEnded: boolean | null;
   resettingSession: boolean;
@@ -23,7 +23,7 @@ type SessionState = {
   selectedAnswer: string | null;
   showWarning: boolean;
 
-  setRole: (role: Role) => void;
+  setRole: (role: Role | string | null) => void;
   startSession: () => void;
   resetSession: () => void;
   setResettingSession: () => void;
@@ -42,7 +42,7 @@ type SessionState = {
 export const useSessionStore = create<SessionState>()(
   persist(
     (set, get) => ({
-      role: undefined,
+      role: null,
       roles: [],
       sessionStarted: null,
       sessionEnded: null,
@@ -78,7 +78,7 @@ export const useSessionStore = create<SessionState>()(
         });
         Cookies.set("sessionStarted", "false", { path: "/" });
         setTimeout(() => {
-          setTimeout(() => set({sessionStarted: null}), 250);
+          setTimeout(() => set({ sessionStarted: null }), 250);
           redirect("/roles");
         }, 1500);
       },
@@ -87,7 +87,6 @@ export const useSessionStore = create<SessionState>()(
       loadFlashcards: () => {
         // Don’t reshuffle if already loaded
         if (get().flashcards.length > 0) return;
-
         try {
           set({ flashcardsLoading: true });
           const result = FlashcardsSchema.safeParse(rawFlashcards);
@@ -96,7 +95,10 @@ export const useSessionStore = create<SessionState>()(
             console.error(z.treeifyError(result.error));
             throw new Error("Invalid flashcards JSON");
           }
-          const filtered = result.data.filter((q) => q.role === get().role);
+          const filtered = result.data.filter(
+            (q) =>
+              q.role.charAt(0).toUpperCase() + q.role.slice(1) === get().role,
+          );
           const cards = get().shuffleCards(filtered, get().questionCount);
           set({
             flashcards: cards,
@@ -139,7 +141,13 @@ export const useSessionStore = create<SessionState>()(
           return [];
         }
 
-        const roles = Array.from(new Set(result.data.map((card) => card.role)));
+        const roles = Array.from(
+          new Set(
+            result.data.map(
+              (card) => card.role.charAt(0).toUpperCase() + card.role.slice(1),
+            ),
+          ),
+        );
         if (roles) set({ roles });
         else set({ roles: [] });
       },
