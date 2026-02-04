@@ -1,0 +1,338 @@
+[
+  {
+    "id": "f1",
+    "role": "frontend",
+    "question": "What does useState return in React?",
+    "options": [
+      {
+        "id": "a",
+        "text": "A state value and a setter function",
+        "isCorrect": true
+      },
+      { "id": "b", "text": "Only the state value" },
+      { "id": "c", "text": "A reducer function" },
+      { "id": "d", "text": "A ref object" }
+    ],
+    "explanation": "useState returns an array with the current state value and a function used to update that state."
+  },
+  {
+    "id": "f2",
+    "role": "frontend",
+    "question": "Which HTML element is used for navigation links?",
+    "options": [
+      { "id": "a", "text": "<nav>", "isCorrect": true },
+      { "id": "b", "text": "<section>" },
+      { "id": "c", "text": "<article>" },
+      { "id": "d", "text": "<aside>" }
+    ],
+    "explanation": "The <nav> element is specifically meant to contain major navigation links in a webpage."
+  },
+  {
+    "id": "f3",
+    "role": "frontend",
+    "question": "What does CSS Flexbox primarily help with?",
+    "options": [
+      { "id": "a", "text": "Layout alignment and spacing", "isCorrect": true },
+      { "id": "b", "text": "Image compression" },
+      { "id": "c", "text": "API calls" },
+      { "id": "d", "text": "Form validation" }
+    ],
+    "explanation": "Flexbox is a layout system that helps align items, distribute space, and create responsive designs."
+  },
+  {
+    "id": "f4",
+    "role": "frontend",
+    "question": "What is JSX in React?",
+    "options": [
+      {
+        "id": "a",
+        "text": "A syntax extension for JavaScript",
+        "isCorrect": true
+      },
+      { "id": "b", "text": "A CSS framework" },
+      { "id": "c", "text": "A database query language" },
+      { "id": "d", "text": "A browser API" }
+    ],
+    "explanation": "JSX allows you to write HTML-like syntax inside JavaScript to define React UI components."
+  },
+  {
+    "id": "f5",
+    "role": "frontend",
+    "question": "Which HTTP method is typically used to fetch data?",
+    "options": [
+      { "id": "a", "text": "GET", "isCorrect": true },
+      { "id": "b", "text": "POST" },
+      { "id": "c", "text": "PUT" },
+      { "id": "d", "text": "DELETE" }
+    ],
+    "explanation": "GET requests are used to retrieve data from a server without modifying it."
+  },
+
+  {
+    "id": "b1",
+    "role": "backend",
+    "question": "What is a REST API?",
+    "options": [
+      {
+        "id": "a",
+        "text": "A standard for client-server communication",
+        "isCorrect": true
+      },
+      { "id": "b", "text": "A frontend framework" },
+      { "id": "c", "text": "A database engine" },
+      { "id": "d", "text": "A caching layer" }
+    ],
+    "explanation": "REST APIs define rules for how clients and servers exchange data using HTTP methods."
+  },
+  {
+    "id": "b2",
+    "role": "backend",
+    "question": "Which database is relational?",
+    "options": [
+      { "id": "a", "text": "PostgreSQL", "isCorrect": true },
+      { "id": "b", "text": "MongoDB" },
+      { "id": "c", "text": "Redis" },
+      { "id": "d", "text": "ElasticSearch" }
+    ],
+    "explanation": "PostgreSQL stores data in structured tables with relationships between them."
+  },
+  {
+    "id": "b3",
+    "role": "backend",
+    "question": "What does authentication verify?",
+    "options": [
+      { "id": "a", "text": "User identity", "isCorrect": true },
+      { "id": "b", "text": "User permissions" },
+      { "id": "c", "text": "Server uptime" },
+      { "id": "d", "text": "Database schema" }
+    ],
+    "explanation": "Authentication confirms who a user is, usually through login credentials or tokens."
+  },
+  {
+    "id": "b4",
+    "role": "backend",
+    "question": "What is middleware used for?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Handling requests before reaching routes",
+        "isCorrect": true
+      },
+      { "id": "b", "text": "Storing images" },
+      { "id": "c", "text": "Rendering UI" },
+      { "id": "d", "text": "Compiling code" }
+    ],
+    "explanation": "Middleware runs between request and response to handle logging, auth, validation, and more."
+  },
+  {
+    "id": "b5",
+    "role": "backend",
+    "question": "Which status code means 'Not Found'?",
+    "options": [
+      { "id": "a", "text": "404", "isCorrect": true },
+      { "id": "b", "text": "200" },
+      { "id": "c", "text": "500" },
+      { "id": "d", "text": "401" }
+    ],
+    "explanation": "404 indicates the requested resource does not exist on the server."
+  },
+
+  {
+    "id": "d1",
+    "role": "devops",
+    "question": "What does CI/CD stand for?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Continuous Integration and Continuous Deployment",
+        "isCorrect": true
+      },
+      { "id": "b", "text": "Code Inspection and Code Delivery" },
+      { "id": "c", "text": "Cloud Infrastructure Design Cycle" },
+      { "id": "d", "text": "Container Installation and Distribution" }
+    ],
+    "explanation": "CI/CD automates testing and deployment so code changes are delivered faster and safer."
+  },
+  {
+    "id": "d2",
+    "role": "devops",
+    "question": "What is Docker mainly used for?",
+    "options": [
+      { "id": "a", "text": "Containerizing applications", "isCorrect": true },
+      { "id": "b", "text": "Designing UI" },
+      { "id": "c", "text": "Writing APIs" },
+      { "id": "d", "text": "Database backups" }
+    ],
+    "explanation": "Docker packages apps with their dependencies so they run consistently everywhere."
+  },
+  {
+    "id": "d3",
+    "role": "devops",
+    "question": "Which tool is commonly used for infrastructure as code?",
+    "options": [
+      { "id": "a", "text": "Terraform", "isCorrect": true },
+      { "id": "b", "text": "Figma" },
+      { "id": "c", "text": "Postman" },
+      { "id": "d", "text": "Jest" }
+    ],
+    "explanation": "Terraform lets you define servers and cloud resources using code."
+  },
+  {
+    "id": "d4",
+    "role": "devops",
+    "question": "What does Kubernetes manage?",
+    "options": [
+      { "id": "a", "text": "Containers and deployments", "isCorrect": true },
+      { "id": "b", "text": "Database queries" },
+      { "id": "c", "text": "CSS styles" },
+      { "id": "d", "text": "User authentication" }
+    ],
+    "explanation": "Kubernetes automates deployment, scaling, and management of containerized apps."
+  },
+  {
+    "id": "d5",
+    "role": "devops",
+    "question": "Why is monitoring important?",
+    "options": [
+      {
+        "id": "a",
+        "text": "To track performance and failures",
+        "isCorrect": true
+      },
+      { "id": "b", "text": "To write frontend code" },
+      { "id": "c", "text": "To encrypt passwords" },
+      { "id": "d", "text": "To generate APIs" }
+    ],
+    "explanation": "Monitoring helps teams detect issues early and keep systems reliable."
+  },
+
+  {
+    "id": "g1",
+    "role": "designer",
+    "question": "What does UX stand for?",
+    "options": [
+      { "id": "a", "text": "User Experience", "isCorrect": true },
+      { "id": "b", "text": "Universal Export" },
+      { "id": "c", "text": "User Execution" },
+      { "id": "d", "text": "Visual Effects" }
+    ],
+    "explanation": "UX focuses on how users feel when interacting with a product."
+  },
+  {
+    "id": "g2",
+    "role": "designer",
+    "question": "Which tool is commonly used for UI design?",
+    "options": [
+      { "id": "a", "text": "Figma", "isCorrect": true },
+      { "id": "b", "text": "Docker" },
+      { "id": "c", "text": "Git" },
+      { "id": "d", "text": "Node.js" }
+    ],
+    "explanation": "Figma is a popular collaborative tool for designing user interfaces."
+  },
+  {
+    "id": "g3",
+    "role": "designer",
+    "question": "What is a wireframe?",
+    "options": [
+      { "id": "a", "text": "A low-fidelity layout sketch", "isCorrect": true },
+      { "id": "b", "text": "Final product design" },
+      { "id": "c", "text": "Database schema" },
+      { "id": "d", "text": "API documentation" }
+    ],
+    "explanation": "Wireframes show basic structure and layout before adding visual details."
+  },
+  {
+    "id": "g4",
+    "role": "designer",
+    "question": "What does visual hierarchy help with?",
+    "options": [
+      { "id": "a", "text": "Guiding user attention", "isCorrect": true },
+      { "id": "b", "text": "Improving server speed" },
+      { "id": "c", "text": "Writing cleaner code" },
+      { "id": "d", "text": "Reducing database load" }
+    ],
+    "explanation": "Visual hierarchy helps users notice the most important elements first."
+  },
+  {
+    "id": "g5",
+    "role": "designer",
+    "question": "Why is contrast important in design?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Improves readability and focus",
+        "isCorrect": true
+      },
+      { "id": "b", "text": "Reduces file size" },
+      { "id": "c", "text": "Speeds up APIs" },
+      { "id": "d", "text": "Improves SEO" }
+    ],
+    "explanation": "Contrast makes text and elements easier to see and understand."
+  },
+
+  {
+    "id": "fs1",
+    "role": "fullstack",
+    "question": "What does CRUD stand for in web development?",
+    "options": [
+      { "id": "a", "text": "Create, Read, Update, Delete", "isCorrect": true },
+      { "id": "b", "text": "Connect, Render, Upload, Deploy" },
+      { "id": "c", "text": "Compile, Run, Use, Debug" },
+      { "id": "d", "text": "Cache, Route, Use, Distribute" }
+    ],
+    "explanation": "CRUD represents the basic operations for managing data in applications."
+  },
+  {
+    "id": "fs2",
+    "role": "fullstack",
+    "question": "Which part of a web app typically handles business logic?",
+    "options": [
+      { "id": "a", "text": "Backend server", "isCorrect": true },
+      { "id": "b", "text": "CSS styles" },
+      { "id": "c", "text": "HTML templates" },
+      { "id": "d", "text": "Browser cache" }
+    ],
+    "explanation": "The backend processes data, applies rules, and communicates with databases."
+  },
+  {
+    "id": "fs3",
+    "role": "fullstack",
+    "question": "What is the main purpose of an API?",
+    "options": [
+      { "id": "a", "text": "Allow systems to communicate", "isCorrect": true },
+      { "id": "b", "text": "Style web pages" },
+      { "id": "c", "text": "Store images" },
+      { "id": "d", "text": "Compile JavaScript" }
+    ],
+    "explanation": "APIs allow different software systems to exchange data and functionality."
+  },
+  {
+    "id": "fs4",
+    "role": "fullstack",
+    "question": "Which technology is commonly used for frontend frameworks?",
+    "options": [
+      { "id": "a", "text": "React", "isCorrect": true },
+      { "id": "b", "text": "PostgreSQL" },
+      { "id": "c", "text": "Redis" },
+      { "id": "d", "text": "Nginx" }
+    ],
+    "explanation": "React is a popular JavaScript library for building interactive UIs."
+  },
+  {
+    "id": "fs5",
+    "role": "fullstack",
+    "question": "Why are environment variables used in applications?",
+    "options": [
+      {
+        "id": "a",
+        "text": "To store configuration and secrets",
+        "isCorrect": true
+      },
+      { "id": "b", "text": "To style components" },
+      { "id": "c", "text": "To render HTML" },
+      { "id": "d", "text": "To manage git branches" }
+    ],
+    "explanation": "Environment variables keep sensitive values like API keys out of source code."
+  }
+]
