@@ -74,6 +74,20 @@ export const useSessionStore = create<SessionState>()(
         }
         return shuffled.slice(0, count);
       },
+      getAvailableRoles(): Role[] {
+        const result = FlashcardsSchema.safeParse(rawFlashcards);
+        if (!result.success) {
+          console.error(
+            "Invalid flashcards JSON:",
+            z.treeifyError(result.error),
+          );
+          return [];
+        }
+
+        const roles = Array.from(new Set(result.data.map((card) => card.role)));
+
+        return roles;
+      },
     }),
     {
       name: "session-store", // saved in localStorage
