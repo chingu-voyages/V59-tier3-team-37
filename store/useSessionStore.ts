@@ -90,7 +90,6 @@ export const useSessionStore = create<SessionState>()(
         try {
           set({ flashcardsLoading: true });
           const result = FlashcardsSchema.safeParse(rawFlashcards);
-
           if (!result.success) {
             console.error(z.treeifyError(result.error));
             throw new Error("Invalid flashcards JSON");
@@ -100,6 +99,8 @@ export const useSessionStore = create<SessionState>()(
               q.role.charAt(0).toUpperCase() + q.role.slice(1) === get().role,
           );
           const cards = get().shuffleCards(filtered, get().questionCount);
+          console.log("load flash cards");
+          console.log(result);
           set({
             flashcards: cards,
             flashCardError: null,

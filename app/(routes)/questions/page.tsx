@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Spinner from "@/components/custom/Spinner";
 import { WarningModal } from "@/components/custom/WarningModal";
 import { Button } from "@/components/ui/button";
@@ -37,6 +37,31 @@ export default function QuestionsPage() {
 
   const searchParams = useSearchParams();
   const warning = searchParams.get("warning");
+
+  const [flip, setFlip] = useState(false);
+  const [height, setHeight] = useState<number | string>("initial");
+
+  const frontEl = useRef<HTMLDivElement | null>(null);
+  const backEl = useRef<HTMLDivElement | null>(null);
+
+  const setMaxHeight = useCallback(() => {
+    if (!frontEl.current || !backEl.current) return;
+    const frontHeight = frontEl.current.getBoundingClientRect().height;
+    const backHeight = backEl.current.getBoundingClientRect().height;
+    setHeight(Math.max(frontHeight, backHeight, 100));
+  }, []);
+
+  useEffect(setMaxHeight, [
+    currentQuestion?.question,
+    currentQuestion?.answer,
+    currentQuestion?.options,
+    setMaxHeight,
+  ]);
+
+  useEffect(() => {
+    window.addEventListener("resize", setMaxHeight);
+    return () => window.removeEventListener("resize", setMaxHeight);
+  }, [setMaxHeight]);
 
   useEffect(() => {
     if (warning === "finish-questions") {
@@ -116,55 +141,83 @@ export default function QuestionsPage() {
         />
       )}
       <div className="max-w-xl w-full border rounded-lg p-6 shadow">
-        <p className="text-sm opacity-60">
-          Question {questionIndex + 1} / {flashcards.length}
-        </p>
+        {/* start */}
+        <div
+          className={`card ${flip ? "flip" : ""}`}
+          style={{ height: height }}
+        >
+          <div className="front w-full" ref={frontEl}>
+            <p className="text-sm opacity-60">
+              Question {questionIndex + 1} / {flashcards.length}
+            </p>
 
-        <h2 className="text-xl font-semibold mt-2">
-          {currentQuestion?.question}
-        </h2>
+            <h2 className="text-xl font-semibold mt-2">
+              {currentQuestion?.question}
+            </h2>
 
-        <div className="mt-4 flex flex-col gap-2">
-          {currentQuestion?.options.map((opt) => {
-            const isCorrect = opt.isCorrect;
-            const isSelected = selectedAnswer === opt.id;
+            <div className="mt-4 flex flex-col gap-2">
+              {currentQuestion?.options.map((opt) => {
+                const isCorrect = opt.isCorrect;
+                const isSelected = selectedAnswer === opt.id;
 
-            let style = "border p-3 rounded cursor-pointer";
+                let style = "border p-3 rounded cursor-pointer";
 
-            if (selectedAnswer) {
-              if (isCorrect) style += " bg-green-200";
-              else if (isSelected) style += " bg-red-200";
-            }
+                if (selectedAnswer) {
+                  if (isCorrect) style += " bg-green-200";
+                  else if (isSelected) style += " bg-red-200";
+                }
 
-            return (
-              <button
-                type="button"
-                key={opt.id}
-                className={style}
-                onClick={() => handleSelect(opt.id)}
-                disabled={!!selectedAnswer}
-              >
-                {opt.text}
-              </button>
-            );
-          })}
+                return (
+                  <button
+                    type="button"
+                    key={opt.id}
+                    className={style}
+                    onClick={() => {
+                      handleSelect(opt.id);
+                    }}
+                    disabled={!!selectedAnswer}
+                  >
+                    {opt.text}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          <div className="back" ref={backEl}>
+            {currentQuestion?.answer}
+          </div>
         </div>
-
+        {/* end */}
         {selectedAnswer && (
           <div className="mt-4 p-3 bg-gray-100 rounded">
             <strong>Explanation:</strong> {currentQuestion?.explanation}
           </div>
         )}
       </div>
-
       {selectedAnswer && moreQuestionsToBeDone && (
-        <button
-          type="button"
-          onClick={next}
-          className="px-4 py-2 bg-black text-white rounded"
-        >
-          Next Question
-        </button>
+        <div className="flex gap-4">
+          <button
+            type="button"
+            onClick={() => {
+              setFlip(!flip);
+            }}
+            className="px-4 py-2 bg-black text-white rounded"
+          >
+            Flip
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              next();
+              if (flip) {
+                setFlip(!flip);
+              }
+            }}
+            className="px-4 py-2 bg-black text-white rounded"
+          >
+            Next Question
+          </button>
+        </div>
       )}
 
       {completedAllQuestions && sessionEnded && (

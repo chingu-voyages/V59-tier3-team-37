@@ -3,6 +3,7 @@
     "id": "f1",
     "role": "frontend",
     "question": "What does useState return in React?",
+    "answer": "A state value and a setter function",
     "options": [
       {
         "id": "a",
@@ -19,6 +20,7 @@
     "id": "f2",
     "role": "frontend",
     "question": "Which HTML element is used for navigation links?",
+    "answer": "<nav>",
     "options": [
       { "id": "a", "text": "<nav>", "isCorrect": true },
       { "id": "b", "text": "<section>" },
@@ -31,6 +33,7 @@
     "id": "f3",
     "role": "frontend",
     "question": "What does CSS Flexbox primarily help with?",
+    "answer": "Layout alignment and spacing",
     "options": [
       { "id": "a", "text": "Layout alignment and spacing", "isCorrect": true },
       { "id": "b", "text": "Image compression" },
@@ -43,6 +46,7 @@
     "id": "f4",
     "role": "frontend",
     "question": "What is JSX in React?",
+    "answer": "A syntax extension for JavaScript",
     "options": [
       {
         "id": "a",
@@ -59,6 +63,7 @@
     "id": "f5",
     "role": "frontend",
     "question": "Which HTTP method is typically used to fetch data?",
+    "answer": "GET",
     "options": [
       { "id": "a", "text": "GET", "isCorrect": true },
       { "id": "b", "text": "POST" },
@@ -72,6 +77,7 @@
     "id": "b1",
     "role": "backend",
     "question": "What is a REST API?",
+    "answer": "A standard for client-server communication",
     "options": [
       {
         "id": "a",
@@ -88,6 +94,7 @@
     "id": "b2",
     "role": "backend",
     "question": "Which database is relational?",
+    "answer": "PostgreSQL",
     "options": [
       { "id": "a", "text": "PostgreSQL", "isCorrect": true },
       { "id": "b", "text": "MongoDB" },
@@ -100,6 +107,7 @@
     "id": "b3",
     "role": "backend",
     "question": "What does authentication verify?",
+    "answer": "User identity",
     "options": [
       { "id": "a", "text": "User identity", "isCorrect": true },
       { "id": "b", "text": "User permissions" },
@@ -112,6 +120,7 @@
     "id": "b4",
     "role": "backend",
     "question": "What is middleware used for?",
+    "answer": "Handling requests before reaching routes",
     "options": [
       {
         "id": "a",
@@ -128,6 +137,7 @@
     "id": "b5",
     "role": "backend",
     "question": "Which status code means 'Not Found'?",
+    "answer": "404",
     "options": [
       { "id": "a", "text": "404", "isCorrect": true },
       { "id": "b", "text": "200" },
@@ -141,6 +151,7 @@
     "id": "d1",
     "role": "devops",
     "question": "What does CI/CD stand for?",
+    "answer": "Continuous Integration and Continuous Deployment",
     "options": [
       {
         "id": "a",
@@ -157,6 +168,7 @@
     "id": "d2",
     "role": "devops",
     "question": "What is Docker mainly used for?",
+    "answer": "Containerizing applications",
     "options": [
       { "id": "a", "text": "Containerizing applications", "isCorrect": true },
       { "id": "b", "text": "Designing UI" },
@@ -169,6 +181,7 @@
     "id": "d3",
     "role": "devops",
     "question": "Which tool is commonly used for infrastructure as code?",
+    "answer": "Terraform",
     "options": [
       { "id": "a", "text": "Terraform", "isCorrect": true },
       { "id": "b", "text": "Figma" },
@@ -181,6 +194,7 @@
     "id": "d4",
     "role": "devops",
     "question": "What does Kubernetes manage?",
+    "answer": "Containers and deployments",
     "options": [
       { "id": "a", "text": "Containers and deployments", "isCorrect": true },
       { "id": "b", "text": "Database queries" },
@@ -193,6 +207,7 @@
     "id": "d5",
     "role": "devops",
     "question": "Why is monitoring important?",
+    "answer": "To track performance and failures",
     "options": [
       {
         "id": "a",
@@ -210,6 +225,7 @@
     "id": "g1",
     "role": "designer",
     "question": "What does UX stand for?",
+    "answer": "User Experience",
     "options": [
       { "id": "a", "text": "User Experience", "isCorrect": true },
       { "id": "b", "text": "Universal Export" },
@@ -222,6 +238,7 @@
     "id": "g2",
     "role": "designer",
     "question": "Which tool is commonly used for UI design?",
+    "answer": "Figma",
     "options": [
       { "id": "a", "text": "Figma", "isCorrect": true },
       { "id": "b", "text": "Docker" },
@@ -234,6 +251,7 @@
     "id": "g3",
     "role": "designer",
     "question": "What is a wireframe?",
+    "answer": "A low-fidelity layout sketch",
     "options": [
       { "id": "a", "text": "A low-fidelity layout sketch", "isCorrect": true },
       { "id": "b", "text": "Final product design" },
@@ -246,6 +264,7 @@
     "id": "g4",
     "role": "designer",
     "question": "What does visual hierarchy help with?",
+    "answer": "Guiding user attention",
     "options": [
       { "id": "a", "text": "Guiding user attention", "isCorrect": true },
       { "id": "b", "text": "Improving server speed" },
@@ -258,6 +277,7 @@
     "id": "g5",
     "role": "designer",
     "question": "Why is contrast important in design?",
+    "answer": "Improves readability and focus",
     "options": [
       {
         "id": "a",
@@ -275,6 +295,7 @@
     "id": "fs1",
     "role": "fullstack",
     "question": "What does CRUD stand for in web development?",
+    "answer": "Create, Read, Update, Delete",
     "options": [
       { "id": "a", "text": "Create, Read, Update, Delete", "isCorrect": true },
       { "id": "b", "text": "Connect, Render, Upload, Deploy" },
@@ -287,6 +308,7 @@
     "id": "fs2",
     "role": "fullstack",
     "question": "Which part of a web app typically handles business logic?",
+    "answer": "Backend server",
     "options": [
       { "id": "a", "text": "Backend server", "isCorrect": true },
       { "id": "b", "text": "CSS styles" },
@@ -299,6 +321,7 @@
     "id": "fs3",
     "role": "fullstack",
     "question": "What is the main purpose of an API?",
+    "answer": "Allow systems to communicate",
     "options": [
       { "id": "a", "text": "Allow systems to communicate", "isCorrect": true },
       { "id": "b", "text": "Style web pages" },
@@ -311,6 +334,7 @@
     "id": "fs4",
     "role": "fullstack",
     "question": "Which technology is commonly used for frontend frameworks?",
+    "answer": "React",
     "options": [
       { "id": "a", "text": "React", "isCorrect": true },
       { "id": "b", "text": "PostgreSQL" },
@@ -323,6 +347,7 @@
     "id": "fs5",
     "role": "fullstack",
     "question": "Why are environment variables used in applications?",
+    "answer": "To store configuration and secrets",
     "options": [
       {
         "id": "a",

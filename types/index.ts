@@ -34,6 +34,7 @@ export interface FlashcardQuestion {
   id: string;
   role: Role;
   question: string;
+  answer: string;
   options: AnswerOption[];
   explanation?: string;
 }
@@ -42,6 +43,7 @@ export const FlashcardQuestionSchema = z.object({
   id: z.string(),
   role: RoleSchema,
   question: z.string(),
+  answer: z.string(),
   options: z.array(AnswerOptionSchema).length(4),
   explanation: z.string().optional(),
 });

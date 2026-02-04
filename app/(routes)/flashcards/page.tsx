@@ -1,10 +1,28 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSessionStore } from "@/store/useSessionStore";
 
 export default function FlashcardsPage() {
   const { flashcards: cards, loadFlashcards } = useSessionStore();
+
+  const [flip, setFlip] = useState(false);
+  const [height, setHeight] = useState<number | string>("initial");
+
+  const frontEl = useRef<HTMLDivElement | null>(null);
+  const backEl = useRef<HTMLDivElement | null>(null);
+
+  function setMaxHeight() {
+    if (!frontEl.current || !backEl.current) return;
+    const frontHeight = frontEl.current.getBoundingClientRect().height;
+    const backHeight = backEl.current.getBoundingClientRect().height;
+    setHeight(Math.max(frontHeight, backHeight, 100));
+  }
+
+  useEffect(() => {
+    window.addEventListener("resize", setMaxHeight);
+    return () => window.removeEventListener("resize", setMaxHeight);
+  }, [setMaxHeight]);
 
   useEffect(() => {
     loadFlashcards();
@@ -14,6 +32,7 @@ export default function FlashcardsPage() {
   const [selected, setSelected] = useState<string | null>(null);
 
   const current = cards[index];
+  useEffect(setMaxHeight, []);
 
   if (!current) {
     return <p className="p-6">No flashcards available.</p>;
@@ -30,37 +49,48 @@ export default function FlashcardsPage() {
 
   return (
     <div className="min-h-screen p-6 flex flex-col items-center gap-6">
-      <div className="max-w-xl w-full border rounded-lg p-6 shadow">
-        <p className="text-sm opacity-60">
-          Question {index + 1} / {cards.length}
-        </p>
+      <div className="max-w-xl w-full border rounded-lg p-6 shadow front">
+        <div
+          className={`card ${flip ? "flip" : ""}`}
+          style={{ height: height }}
+          onClick={() => setFlip(!flip)}
+        >
+          <div className="front" ref={frontEl}>
+            <p className="text-sm opacity-60">
+              Question {index + 1} / {cards.length}
+            </p>
 
-        <h2 className="text-xl font-semibold mt-2">{current.question}</h2>
+            <h2 className="text-xl font-semibold mt-2">{current.question}</h2>
 
-        <div className="mt-4 flex flex-col gap-2">
-          {current.options.map((opt) => {
-            const isCorrect = opt.isCorrect;
-            const isSelected = selected === opt.id;
+            <div className="mt-4 flex flex-col gap-2">
+              {current.options.map((opt) => {
+                const isCorrect = opt.isCorrect;
+                const isSelected = selected === opt.id;
 
-            let style = "border p-3 rounded cursor-pointer";
+                let style = "border p-3 rounded cursor-pointer";
 
-            if (selected) {
-              if (isCorrect) style += " bg-green-200";
-              else if (isSelected) style += " bg-red-200";
-            }
+                if (selected) {
+                  if (isCorrect) style += " bg-green-200";
+                  else if (isSelected) style += " bg-red-200";
+                }
 
-            return (
-              <button
-                type="button"
-                key={opt.id}
-                className={style}
-                onClick={() => handleSelect(opt.id)}
-                disabled={!!selected}
-              >
-                {opt.text}
-              </button>
-            );
-          })}
+                return (
+                  <button
+                    type="button"
+                    key={opt.id}
+                    className={style}
+                    onClick={() => handleSelect(opt.id)}
+                    disabled={!!selected}
+                  >
+                    {opt.text}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          <div className="back" ref={backEl}>
+            {current.answer}
+          </div>
         </div>
 
         {selected && (

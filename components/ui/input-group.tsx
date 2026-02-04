@@ -60,7 +60,8 @@ function InputGroupAddon({
   className,
   align = "inline-start",
   ...props
-}: React.ComponentProps<"button"> & VariantProps<typeof inputGroupAddonVariants>) {
+}: React.ComponentProps<"button"> &
+  VariantProps<typeof inputGroupAddonVariants>) {
   return (
     <button
       // role="group"
