@@ -1,35 +1,36 @@
-// app/role/page.tsx
-import { selectRole } from "./actions";
+'use client'
+
+import { useSessionStore } from '@/store/useSessionStore'
+import { selectRole as selectRoleAction } from './actions'
+import { Role, ROLES } from '@/types'
 
 export default function RolePage() {
-  return (
-    <div className="flex flex-col gap-4 p-10">
-      <h1>Select your Role</h1>
-      <form>
-        {/* Pass the role to the server action */}
-        <button
-          formAction={async () => {
-            "use server";
-            await selectRole("student");
-          }}
-          className="bg-red-300 p-2 rounded m-4"
-          type='button'
+  const setRole = useSessionStore((s) => s.setRole)
+  const startSession = useSessionStore((s) => s.startSession)
 
-        >
-          I am a Student
-        </button>
-        <br />
-        <button
-          formAction={async () => {
-            "use server";
-            await selectRole("teacher");
-          }}
-          className="bg-red-300 p-2 rounded m-4"
-          type='button'
-        >
-          I am a Teacher
-        </button>
-      </form>
+  const selectRole = (role: Role) => {
+    setRole(role)
+    selectRoleAction(role)
+    startSession()
+  }
+
+  return (
+    <div>
+      <h1>Select role</h1>
+
+      <button 
+      className='bg-red-300 p-2 m-3 rounded'
+      type='button'
+      onClick={() => selectRole(ROLES.FRONTEND)}>
+        Frontend
+      </button>
+
+      <button 
+      className='bg-red-300 p-2 m-3 rounded'
+      type='button'
+      onClick={() => selectRole(ROLES.BACKEND)}>
+        Backend
+      </button>
     </div>
-  );
+  )
 }

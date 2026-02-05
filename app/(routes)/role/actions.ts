@@ -1,10 +1,10 @@
-// app/role/actions.ts
 "use server";
 
+import { Role } from "@/types";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-export async function selectRole(role: string) {
+export async function selectRole(role: Role) {
   // Set the cookie (valid for 7 days, for example)
   const cookies1 = await cookies();
   cookies1.set("user_role", role, {
