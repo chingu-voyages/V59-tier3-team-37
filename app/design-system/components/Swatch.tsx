@@ -49,22 +49,20 @@ const Swatch = ({ colorVar, value }: SwatchProps) => {
           <p className="text-md font-medium text-green-400">Copied!</p>
         ) : (
           <button
-  type="button"
-  className="text-md font-medium cursor-pointer text-left"
-  onClick={() => handleColorClick(colorVar)}
->
-  {colorString}
-</button>
-
+            type="button"
+            className="text-md font-medium cursor-pointer text-left"
+            onClick={() => handleColorClick(colorVar)}
+          >
+            {colorString}
+          </button>
         )}
         <button
-  type="button"
-  className="text-sm text-gray-300 cursor-pointer text-left"
-  onClick={() => handleClickValue(value)}
->
-  {showValueCopied ? "Copied!" : value}
-</button>
-
+          type="button"
+          className="text-sm text-gray-300 cursor-pointer text-left"
+          onClick={() => handleClickValue(value)}
+        >
+          {showValueCopied ? "Copied!" : value}
+        </button>
       </div>
     </div>
   );
