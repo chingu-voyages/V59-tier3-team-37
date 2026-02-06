@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+import ThemeToggle from "@/components/custom/theme/ThemeToggle";
 import Link from "next/link";
 import { Body2, HeadlineXL } from "@/components/typography";
 
