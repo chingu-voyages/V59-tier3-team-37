@@ -47,6 +47,43 @@
 }
 
 :root {
+  --brand-50: #edecfe;
+  --brand-100: #dcd9fd;
+  --brand-200: #b9b4fa;
+  --brand-300: #958bf8;
+  --brand-400: #7364f4;
+  --brand-500: #5235ef;
+  --brand-600: #3f1cd4;
+  --brand-700: #2f13a5;
+  --brand-800: #220c7e;
+  --brand-900: #0b033b;
+
+  --gray-50: #e2e2e3;
+  --gray-100: #c9c9ca;
+  --gray-200: #969698;
+  --gray-300: #656568;
+  --gray-400: #39393b;
+  --gray-500: #101011;
+  --gray-600: #0e0e0f;
+  --gray-700: #0b0b0c;
+  --gray-800: #070708;
+  --gray-900: #040404;
+  --gray-900: #000000;
+
+  /* Hero gradients */
+  --gradient-hero: linear-gradient(
+    180deg,
+    var(--brand-100) 0%,
+    var(--brand-200) 40%,
+    var(--brand-300) 70%,
+    #ffffff 100%
+  );
+  /* Optional soft radial glow */
+  --gradient-hero-glow: radial-gradient(
+    60% 60% at 50% 0%,
+    var(--brand-200) 0%,
+    transparent 70%
+  );
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -120,6 +157,8 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: "Inter", Arial, Helvetica, sans-serif;
   }
 }

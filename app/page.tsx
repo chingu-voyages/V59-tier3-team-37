@@ -3,37 +3,50 @@
 import Image from "next/image";
 import ThemeToggle from "@/components/custom/theme/ThemeToggle";
 import Link from "next/link";
+import { Body2, HeadlineXL } from "@/components/typography";
 
-export default function Home() {
+export default function HeroSection() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-100 font-sans text-slate-900 dark:bg-slate-950 dark:text-slate-50">
-      <section className="flex flex-col items-center justify-center px-4 py-16">
-        <p className="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">
-          Interview Questions Generator
-        </p>
+    <section className="min-h-screen bg-gradient-to-b from-white from-5% via-[#7364F4]/60 via-50% to-white to-95% pt-32 pb-20 px-6">
+      <div className="max-w-6xl mx-auto">
+        {/* Hero Content */}
+        <div className="text-center mb-16">
+          {/* Main Heading */}
+          <HeadlineXL className="text-black mb-6 leading-tight">
+            Dedicated space to hone your
+            <br />
+            skills powered by AI.
+          </HeadlineXL>
+          {/* Subheading */}
+          <Body2 className="text-gray-700 text-lg md:text-xl max-w-3xl mx-auto mb-10 leading-relaxed">
+            Everything you need is in one place, so you can focus on{" "}
+            <span className="font-semibold">
+              mastering <br />
+            </span>
+            your narrative, building your confidence, and securing your{" "}
+            <span className="font-semibold">next great opportunity.</span>
+          </Body2>
 
-        <Link
-          href="/how-it-works"
-          aria-label="Go to How It Works page"
-          className="group cursor-pointer"
-        >
-          <div className="rounded-3xl border-4 border-slate-300 bg-white/80 p-4 transition-colors duration-200 group-hover:border-purple-500 dark:border-slate-600 dark:bg-slate-900/80">
-            <Image
-              src="/hero_logo1.jpg"
-              alt="Interview Questions Generator logo"
-              width={320}
-              height={320}
-              className="h-auto w-64 sm:w-80"
-              priority
-            />
+          {/* CTA Button */}
+          <Link
+            href="/get-started"
+            className="inline-block px-8 py-4 bg-gradient-to-b from-[#7364F4] to-purple-400 hover:from-[#6354E4] hover:to-purple-500 text-white text-lg font-semibold rounded-full transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105"
+          >
+            Get Started • it's free
+          </Link>
+        </div>
+
+        {/* Content Card */}
+        <div className="w-full max-w-5xl mx-auto">
+          <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12 min-h-[500px]">
+            {/* Add your content here - could be a video, image, or interactive demo */}
+            <div className="w-full h-full flex items-center justify-center text-gray-400">
+              {/* Placeholder - replace with your actual content */}
+              <p className="text-center">Your content goes here</p>
+            </div>
           </div>
-        </Link>
-
-        <p className="mt-6 max-w-xl text-center text-sm text-slate-600 dark:text-slate-400">
-          Click the logo to jump into smart, role-based interview question
-          practice.
-        </p>
-      </section>
-    </div>
+        </div>
+      </div>
+    </section>
   );
 }
