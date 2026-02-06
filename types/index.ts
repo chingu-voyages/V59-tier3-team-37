@@ -41,6 +41,14 @@ export const FlashcardQuestionSchema = z.object({
   explanation: z.string().optional(),
 });
 
+export const FlashcardQuestionWithAnswer = FlashcardQuestionSchema.extend({
+  selectedOptionId: z.string().nullable(),
+});
+
+export type FlashcardQuestionWithAnswer = z.infer<
+  typeof FlashcardQuestionWithAnswer
+>;
+
 export const FlashcardsSchema = z.array(FlashcardQuestionSchema);
 
 export type Flashcards = z.infer<typeof FlashcardsSchema>;
