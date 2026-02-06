@@ -5,7 +5,7 @@ import { teamMembers } from "@/data/teamMembers";
 
 export default function Footer() {
   return (
-    <footer className="w-full border-t border-[var(--border)] bg-[var(--primary)]">
+    <footer className="w-full border-t border-border bg-primary">
       <div className="mx-auto px-4 sm:px-6 lg:px-24 py-6 flex flex-col gap-3 items-center text-center text-sm">
         <p>
           &copy; {new Date().getFullYear()} Chingu, Inc. This work is licensed

@@ -5,9 +5,9 @@ import Link from "next/link";
 
 export default function Header() {
   return (
-    <header className="flex items-center px-8 py-4 mt-6">
-      {/* Logo */}
-      <div className="flex-shrink-0">
+    <header className="border-b border-gray-200 bg-white dark:bg-black px-3.75 py-3.75 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+      {/* Logo / App Name */}
+      <div>
         <Link href="/">
           <Image
             src="/SkillPath.svg"
@@ -18,7 +18,6 @@ export default function Header() {
           />
         </Link>
       </div>
-
       {/* Navigation Links - evenly spaced */}
       <nav className="hidden md:flex flex-1 justify-center space-x-50 font-medium text-[#656568] text-sm">
         <Link href="#benefit" className="hover:text-primary-foreground">
@@ -31,7 +30,6 @@ export default function Header() {
           Q&A
         </Link>
       </nav>
-
       {/* Login Button */}
       <div className="flex-shrink-0 relative">
         <div className="absolute -inset-1 rounded-full bg-[#3F1CD4] opacity-30 blur-xl z-0"></div>

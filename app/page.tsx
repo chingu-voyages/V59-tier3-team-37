@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
-import ThemeToggle from "@/components/custom/theme/ThemeToggle";
+// import Image from "next/image";
+// import ThemeToggle from "@/components/custom/theme/ThemeToggle";
 import Link from "next/link";
 import { Body2, HeadlineXL } from "@/components/typography";
 
@@ -32,7 +32,7 @@ export default function HeroSection() {
             href="/get-started"
             className="inline-block px-8 py-4 bg-gradient-to-b from-[#7364F4] to-purple-400 hover:from-[#6354E4] hover:to-purple-500 text-white text-lg font-semibold rounded-full transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105"
           >
-            Get Started • it's free
+            Get Started • it&apos;s free
           </Link>
         </div>
 

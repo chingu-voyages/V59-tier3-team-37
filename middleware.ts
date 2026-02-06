@@ -1,27 +1,29 @@
-// middleware.ts
-
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-export function middleware(request: NextRequest) {
-  // 1. Define the protected path(s)
-  const isQuestionsPage = request.nextUrl.pathname.startsWith("/questions");
+export function middleware(req: NextRequest) {
+  const pathname = req.nextUrl.pathname;
 
-  // 2. Check for the role cookie
-  // 'user_role' is the name of the cookie we will set later
-  const hasRole = request.cookies.has("user_role");
-
-  // 3. The Logic: If trying to access questions without a role, redirect.
-  if (isQuestionsPage && !hasRole) {
-    // Construct the URL for the redirect
-    const roleUrl = new URL("/role", request.url);
-
-    // Optional: Pass the original URL as a query param to redirect back later
-    roleUrl.searchParams.set("from", request.nextUrl.pathname);
-
-    return NextResponse.redirect(roleUrl);
+  // 1. Ignore internal Next.js and static requests
+  if (
+    pathname.startsWith("/_next") ||
+    pathname.startsWith("/api") ||
+    pathname === "/favicon.ico"
+  ) {
+    return NextResponse.next();
   }
 
-  // 4. If all checks pass, continue to the requested page
+  // 2. Check if sessionStarted cookie is true
+  const sessionStarted = req.cookies.get("sessionStarted")?.value === "true";
+
+  // 3. If session started AND user is NOT on /questions, redirect
+  if (sessionStarted && pathname !== "/questions") {
+    const url = new URL("/questions", req.url);
+    url.searchParams.set("warning", "finish-questions");
+    return NextResponse.redirect(url);
+  }
+
+  // 4. Otherwise, let them continue
+
   return NextResponse.next();
 }
