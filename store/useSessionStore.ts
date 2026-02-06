@@ -78,7 +78,7 @@ export const useSessionStore = create<SessionState>()(
         });
         Cookies.set("sessionStarted", "false", { path: "/" });
         setTimeout(() => {
-          setTimeout(() => set({sessionStarted: null}), 250);
+          setTimeout(() => set({ sessionStarted: null }), 250);
           redirect("/roles");
         }, 1500);
       },

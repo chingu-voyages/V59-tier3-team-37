@@ -1,5 +1,3 @@
-// app/middleware.ts
-
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
@@ -26,5 +24,6 @@ export function middleware(req: NextRequest) {
   }
 
   // 4. Otherwise, let them continue
+
   return NextResponse.next();
 }
