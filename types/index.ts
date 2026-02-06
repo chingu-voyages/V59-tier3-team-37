@@ -1,23 +1,18 @@
 import z from "zod";
 
-export const ROLES = {
-  FRONTEND: "frontend",
-  BACKEND: "backend",
-  FULLSTACK: "fullstack",
-  DESIGNER: "designer",
-  DEVOPS: "devops",
-} as const;
-
-export type Role = (typeof ROLES)[keyof typeof ROLES];
-
 export const RoleSchema = z.enum([
   "frontend",
   "backend",
   "fullstack",
   "devops",
   "designer",
+  "scrum master",
+  "python developer",
+  "ui/ux designer",
+  "web developer",
 ]);
 
+export type Role = z.infer<typeof RoleSchema>;
 export interface AnswerOption {
   id: string;
   text: string;
