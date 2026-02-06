@@ -1,35 +1,17 @@
 "use client";
 
-import { useEffect } from "react";
 import SummaryCard from "@/components/custom/summary-card/SummaryCard";
-// import { useFlashcardResults } from "@/components/custom/context/FlashcardContext";
 import { useSessionStore } from "@/store/useSessionStore";
 
 export default function SummaryPage() {
-  const { flashcards: cards, loadFlashcards } = useSessionStore();
+  const { selectedAnswers } = useSessionStore();
 
-  useEffect(() => {
-    loadFlashcards();
-  }, [loadFlashcards]);
-
-  const total = cards.length;
-  const correct = cards.filter((q) =>
-    q.options.filter((opt) => opt.isCorrect),
+  const total = selectedAnswers.length;
+  const correct = selectedAnswers.filter(
+    (q) => q.selectedOptionId === q.options.find((opt) => opt.isCorrect)?.id,
   ).length;
   const incorrect = total - correct;
   const accuracy = total ? Math.round((correct / total) * 100) : 0;
-
-  // const topicStats = results.reduce<Record<string, { total: number; correct: number }>>(
-  //   (acc, curr) => {
-  //     if (!acc[curr.topic]) {
-  //       acc[curr.topic] = { total: 0, correct: 0 };
-  //     }
-  //     acc[curr.topic].total += 1;
-  //     if (curr.isCorrect) acc[curr.topic].correct += 1;
-  //     return acc;
-  //   },
-  //   {}
-  // );
 
   return (
     <div className="p-6 max-w-5xl mx-auto">

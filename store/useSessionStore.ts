@@ -4,7 +4,7 @@ import z from "zod";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import data from "@/data/flashcards.json";
-import type { Flashcards, Role } from "@/types";
+import type { FlashcardQuestionWithAnswer, Flashcards, Role } from "@/types";
 import { FlashcardsSchema } from "@/types";
 
 type SessionState = {
@@ -14,11 +14,9 @@ type SessionState = {
   sessionEnded: boolean | null;
   resettingSession: boolean;
   flashcards: z.infer<typeof FlashcardsSchema>;
+  selectedAnswers: FlashcardQuestionWithAnswer[];
   flashCardError: string | null;
   flashcardsLoading: boolean;
-  questionCount: number;
-  questionIndex: number;
-  selectedAnswer: string | null;
   showWarning: boolean;
   setRole: (role: Role) => void;
   startSession: () => void;
@@ -27,10 +25,10 @@ type SessionState = {
   loadFlashcards: () => void;
   shuffleCards: (filtered: Flashcards, count: number) => Flashcards;
   getAvailableRoles: () => void;
-  setQuestionIndex: () => void;
-  setSelectedAnswer: (answer: string | null) => void;
+  setSelectedAnswer: (answer: FlashcardQuestionWithAnswer) => void;
   setSessionEnded: () => void;
   setShowWarning: (warning: boolean) => void;
+  nextQuestion: () => void;
 };
 
 export const useSessionStore = create<SessionState>()(
@@ -41,12 +39,12 @@ export const useSessionStore = create<SessionState>()(
       sessionStarted: null,
       sessionEnded: null,
       resettingSession: false,
+      selectedAnswers: [],
       flashcards: [],
       flashCardError: null,
       flashcardsLoading: false,
       questionCount: 10, // will still display only 5 questions per category because data set only have 5 per category
       questionIndex: 0,
-      selectedAnswer: null,
       showWarning: false,
       setRole: (role) => set({ role }),
       startSession: () => {
@@ -62,8 +60,7 @@ export const useSessionStore = create<SessionState>()(
           flashcards: [],
           flashCardError: null,
           sessionEnded: null,
-          questionIndex: 0,
-          selectedAnswer: null,
+          selectedAnswers: [],
         });
         Cookies.set("sessionStarted", "false", { path: "/" });
         setTimeout(() => {
@@ -75,11 +72,6 @@ export const useSessionStore = create<SessionState>()(
       setSessionEnded: () => set({ sessionEnded: true, showWarning: false }),
       loadFlashcards: () => {
         try {
-          set({
-            flashcardsLoading: true,
-            questionIndex: 0,
-            selectedAnswer: null,
-          });
           const result = FlashcardsSchema.safeParse(data);
 
           if (!result.success) {
@@ -88,12 +80,17 @@ export const useSessionStore = create<SessionState>()(
           }
 
           const filtered = result.data.filter((q) => q.role === get().role);
-          const cards = get().shuffleCards(filtered, get().questionCount);
 
           set({
             flashcards: filtered,
             flashCardError: null,
             flashcardsLoading: false,
+            selectedAnswers: [
+              {
+                ...filtered[0],
+                selectedOptionId: null,
+              },
+            ],
           });
         } catch (err) {
           set({ flashcardsLoading: false });
@@ -134,10 +131,24 @@ export const useSessionStore = create<SessionState>()(
         const roles = Array.from(new Set(result.data.map((q) => q.role)));
         set({ roles });
       },
-      setQuestionIndex: () =>
-        set((state) => ({ questionIndex: state.questionIndex + 1 })),
-      setSelectedAnswer: (answer: string | null) =>
-        set({ selectedAnswer: answer }),
+      setSelectedAnswer: (answer: FlashcardQuestionWithAnswer) => {
+        const updatedAnswers = get().selectedAnswers.map((a) =>
+          a.id === answer.id ? answer : a,
+        );
+        set({ selectedAnswers: updatedAnswers });
+      },
+      nextQuestion: () => {
+        const { flashcards, selectedAnswers } = get();
+        set({
+          selectedAnswers: [
+            ...selectedAnswers,
+            {
+              ...flashcards[selectedAnswers.length],
+              selectedOptionId: null,
+            },
+          ],
+        });
+      },
       setShowWarning: (warning: boolean) => set({ showWarning: warning }),
     }),
     {
