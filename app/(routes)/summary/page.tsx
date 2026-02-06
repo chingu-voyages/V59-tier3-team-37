@@ -1,19 +1,21 @@
 "use client";
 
+import { useEffect } from "react";
+import SummaryCard from "@/components/custom/summary-card/SummaryCard";
 // import { useFlashcardResults } from "@/components/custom/context/FlashcardContext";
 import { useSessionStore } from "@/store/useSessionStore";
-import SummaryCard from "@/components/custom/summary-card/SummaryCard";
-import { useEffect } from "react";
 
 export default function SummaryPage() {
   const { flashcards: cards, loadFlashcards } = useSessionStore();
 
   useEffect(() => {
     loadFlashcards();
-  }, [loadFlashcards])
+  }, [loadFlashcards]);
 
   const total = cards.length;
-  const correct = cards.filter(q => q.options.filter(opt => opt.isCorrect)).length;
+  const correct = cards.filter((q) =>
+    q.options.filter((opt) => opt.isCorrect),
+  ).length;
   const incorrect = total - correct;
   const accuracy = total ? Math.round((correct / total) * 100) : 0;
 
@@ -58,7 +60,7 @@ export default function SummaryPage() {
             </div>
           );
         })} */}
-      </div>
+    </div>
 
     //   {/* Incorrect Questions */}
     //   <h2 className="text-xl font-semibold mt-8 mb-4">Review Mistakes</h2>

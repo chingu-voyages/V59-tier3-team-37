@@ -31,7 +31,7 @@ export default function Header() {
         </Link>
       </nav>
       {/* Login Button */}
-      <div className="flex-shrink-0 relative">
+      <div className="shrink-0 relative">
         <div className="absolute -inset-1 rounded-full bg-[#3F1CD4] opacity-30 blur-xl z-0"></div>
         <Link
           href="/login"

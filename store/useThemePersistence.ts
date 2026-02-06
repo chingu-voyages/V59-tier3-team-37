@@ -30,6 +30,6 @@ export const useThemePersistence = () => {
 
     localStorage.setItem("darkMode", String(darkMode));
 
-    document.documentElement.classList.toggle("dark", darkMode);
+    document.documentElement.classList.toggle("light", true);
   }, [darkMode]);
 };
