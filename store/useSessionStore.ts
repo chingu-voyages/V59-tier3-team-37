@@ -4,7 +4,7 @@ import z from "zod";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import data from "@/data/flashcards.json";
-import type { Flashcards, Role, FlashcardQuestionWithAnswer } from "@/types";
+import type { FlashcardQuestionWithAnswer, Flashcards, Role } from "@/types";
 import { FlashcardsSchema } from "@/types";
 
 type SessionState = {
