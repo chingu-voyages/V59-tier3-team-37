@@ -13,7 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useSessionStore } from "@/store/useSessionStore";
-import { ROLES, type Role } from "@/types";
+import type { Role } from "@/types";
 
 interface RoleOption {
   // this is kept for testing for now (i don't want to ruin your testing)
@@ -27,10 +27,6 @@ interface RoleSelectProps {
   label?: string;
   onValueChange?: (value: string) => void;
   defaultValue?: string;
-}
-
-export function isRole(value: unknown): value is Role {
-  return Object.values(ROLES).includes(value as Role);
 }
 
 export function RoleSelect({

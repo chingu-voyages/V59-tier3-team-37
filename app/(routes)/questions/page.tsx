@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import Spinner from "@/components/custom/Spinner";
 import { WarningModal } from "@/components/custom/WarningModal";
@@ -11,13 +11,11 @@ export default function QuestionsPage() {
   const {
     flashcards,
     loadFlashcards,
-    startSession,
     resetSession,
     sessionEnded,
     setSessionEnded,
     resettingSession,
     flashcardsLoading,
-    hasHydrated,
     role,
     questionIndex,
     setQuestionIndex,
@@ -27,46 +25,20 @@ export default function QuestionsPage() {
     setShowWarning,
   } = useSessionStore();
   const router = useRouter();
-  const pathname = usePathname();
-  const isQuestionsPage = pathname === "/questions";
 
   const currentQuestion = flashcards[questionIndex];
   const moreQuestionsToBeDone = questionIndex < flashcards?.length - 1;
   const completedAllQuestions =
     selectedAnswer && questionIndex === flashcards?.length - 1;
 
-  const searchParams = useSearchParams();
-  const warning = searchParams.get("warning");
-
   useEffect(() => {
-    console.log("warning", warning);
-    if (warning === "finish-questions") {
-      setShowWarning(true);
+    if (!role) {
+      router.push("/roles");
+      return;
     }
-  }, [warning, setShowWarning]);
 
-  useEffect(() => {
-    if (role) {
-      loadFlashcards();
-    }
-  }, [loadFlashcards, role]);
-
-  useEffect(() => {
-    if (role && isQuestionsPage) {
-      startSession();
-    }
-  }, [role, isQuestionsPage, startSession]);
-
-  useEffect(() => {
-    if (completedAllQuestions) {
-      setSessionEnded();
-    }
-  }, [setSessionEnded, completedAllQuestions]);
-
-  if (!hasHydrated || flashcardsLoading) {
-    // restoring saved state or fetching/preparing data
-    return <Spinner />;
-  }
+    loadFlashcards();
+  }, [loadFlashcards, role, router]);
 
   if (resettingSession) {
     return (
@@ -107,22 +79,28 @@ export default function QuestionsPage() {
     setSelectedAnswer(null);
     setQuestionIndex();
   }
-  console.log("SHOW WARNING:");
-  console.log(showWarning);
 
   return (
     <div className="min-h-screen p-6 flex flex-col items-center gap-6">
-      {showWarning && (
-        <WarningModal
-          message="You must finish your current questions before navigating away!"
-          onClose={() => setShowWarning(false)} // optional dismiss
-        />
-      )}
+      {/* Back to roles button */}
+      <div className="max-w-xl w-full">
+        <Button
+          variant="outline"
+          onClick={() => {
+            if (!completedAllQuestions) setShowWarning(true);
+            else router.push("/roles");
+          }}
+        >
+          Back to roles
+        </Button>
+      </div>
       <div className="max-w-xl w-full border rounded-lg p-6 shadow">
-        <p className="text-sm opacity-60">
-          Question {questionIndex + 1} / {flashcards.length}
-        </p>
-
+        <div className="flex justify-between">
+          <p className="capitalize text-sm opacity-60">{role}</p>
+          <p className="text-sm opacity-60">
+            Question {questionIndex + 1} / {flashcards.length}
+          </p>
+        </div>
         <h2 className="text-xl font-semibold mt-2">
           {currentQuestion?.question}
         </h2>
@@ -178,6 +156,18 @@ export default function QuestionsPage() {
           </Button>
         </>
       )}
+
+      {/* Warning modal when leaving early */}
+      <WarningModal
+        show={showWarning}
+        message={"You are leaving the session before completing all questions."}
+        onClose={() => setShowWarning(false)}
+        onConfirm={() => {
+          setShowWarning(false);
+          router.push("/roles");
+        }}
+        confirmText={"Back to roles"}
+      />
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import z from "zod";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import rawFlashcards from "@/public/flashcards.json";
+import data from "@/data/flashcards.json";
 import type { Flashcards, Role } from "@/types";
 import { FlashcardsSchema } from "@/types";
 
@@ -13,26 +13,20 @@ type SessionState = {
   sessionStarted: boolean | null;
   sessionEnded: boolean | null;
   resettingSession: boolean;
-  darkMode: boolean;
   flashcards: z.infer<typeof FlashcardsSchema>;
   flashCardError: string | null;
   flashcardsLoading: boolean;
   questionCount: number;
-  hasHydrated: boolean;
   questionIndex: number;
   selectedAnswer: string | null;
   showWarning: boolean;
-
   setRole: (role: Role) => void;
   startSession: () => void;
   resetSession: () => void;
   setResettingSession: () => void;
-  setDarkMode: (value: boolean) => void;
-  toggleDarkMode: () => void;
   loadFlashcards: () => void;
   shuffleCards: (filtered: Flashcards, count: number) => Flashcards;
   getAvailableRoles: () => void;
-  setHasHydrated: () => void;
   setQuestionIndex: () => void;
   setSelectedAnswer: (answer: string | null) => void;
   setSessionEnded: () => void;
@@ -47,18 +41,13 @@ export const useSessionStore = create<SessionState>()(
       sessionStarted: null,
       sessionEnded: null,
       resettingSession: false,
-      darkMode: false,
       flashcards: [],
       flashCardError: null,
       flashcardsLoading: false,
       questionCount: 10, // will still display only 5 questions per category because data set only have 5 per category
-      hasHydrated: false,
       questionIndex: 0,
       selectedAnswer: null,
       showWarning: false,
-
-      toggleDarkMode: () => set((state) => ({ darkMode: !state.darkMode })),
-      setDarkMode: (value) => set({ darkMode: value }),
       setRole: (role) => set({ role }),
       startSession: () => {
         const sessionAlreadyStarted = get().sessionStarted;
@@ -85,21 +74,24 @@ export const useSessionStore = create<SessionState>()(
       setResettingSession: () => set({ resettingSession: false }),
       setSessionEnded: () => set({ sessionEnded: true, showWarning: false }),
       loadFlashcards: () => {
-        // Don’t reshuffle if already loaded
-        if (get().flashcards.length > 0) return;
-
         try {
-          set({ flashcardsLoading: true });
-          const result = FlashcardsSchema.safeParse(rawFlashcards);
+          set({
+            flashcardsLoading: true,
+            questionIndex: 0,
+            selectedAnswer: null,
+          });
+          const result = FlashcardsSchema.safeParse(data);
 
           if (!result.success) {
             console.error(z.treeifyError(result.error));
             throw new Error("Invalid flashcards JSON");
           }
+
           const filtered = result.data.filter((q) => q.role === get().role);
           const cards = get().shuffleCards(filtered, get().questionCount);
+
           set({
-            flashcards: cards,
+            flashcards: filtered,
             flashCardError: null,
             flashcardsLoading: false,
           });
@@ -130,7 +122,7 @@ export const useSessionStore = create<SessionState>()(
         return shuffled.slice(0, count);
       },
       getAvailableRoles: () => {
-        const result = FlashcardsSchema.safeParse(rawFlashcards);
+        const result = FlashcardsSchema.safeParse(data);
         if (!result.success) {
           console.error(
             "Invalid flashcards JSON:",
@@ -139,11 +131,9 @@ export const useSessionStore = create<SessionState>()(
           return [];
         }
 
-        const roles = Array.from(new Set(result.data.map((card) => card.role)));
-        if (roles) set({ roles });
-        else set({ roles: [] });
+        const roles = Array.from(new Set(result.data.map((q) => q.role)));
+        set({ roles });
       },
-      setHasHydrated: () => set({ hasHydrated: true }),
       setQuestionIndex: () =>
         set((state) => ({ questionIndex: state.questionIndex + 1 })),
       setSelectedAnswer: (answer: string | null) =>
@@ -152,9 +142,6 @@ export const useSessionStore = create<SessionState>()(
     }),
     {
       name: "session-store", // saved in localStorage
-      onRehydrateStorage: () => (state) => {
-        state?.setHasHydrated();
-      },
     },
   ),
 );
