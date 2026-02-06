@@ -1,6 +1,15 @@
 import { render, screen } from "@testing-library/react";
-import { beforeAll, describe, expect, test } from "vitest";
+import { beforeAll, describe, expect, test, vi } from "vitest";
 import { RoleSelect } from "./RoleSelector";
+
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+    replace: vi.fn(),
+    refresh: vi.fn(),
+    back: vi.fn(),
+  }),
+}));
 
 const options = [
   { value: "admin", label: "Administrator" },
@@ -19,8 +28,8 @@ describe("RoleSelect Component", () => {
   test("RoleSelect reenders options", async () => {
     const ComboBox = screen.getByRole("combobox");
     await ComboBox.click();
-    expect(screen.getByText("Administrator")).toBeDefined();
-    expect(screen.getByText("Editor")).toBeDefined();
-    expect(screen.getByText("Viewer")).toBeDefined();
+    expect(screen.findByText("Administrator")).toBeDefined();
+    expect(screen.findByText("Editor")).toBeDefined();
+    expect(screen.findByText("Viewer")).toBeDefined();
   });
 });
