@@ -1,23 +1,18 @@
 import z from "zod";
 
-export const ROLES = {
-  FRONTEND: "frontend",
-  BACKEND: "backend",
-  FULLSTACK: "fullstack",
-  DESIGNER: "designer",
-  DEVOPS: "devops",
-} as const;
-
-export type Role = (typeof ROLES)[keyof typeof ROLES];
-
 export const RoleSchema = z.enum([
   "frontend",
   "backend",
   "fullstack",
   "devops",
   "designer",
+  "scrum master",
+  "python developer",
+  "ui/ux designer",
+  "web developer",
 ]);
 
+export type Role = z.infer<typeof RoleSchema>;
 export interface AnswerOption {
   id: string;
   text: string;
@@ -45,6 +40,14 @@ export const FlashcardQuestionSchema = z.object({
   options: z.array(AnswerOptionSchema).length(4),
   explanation: z.string().optional(),
 });
+
+export const FlashcardQuestionWithAnswer = FlashcardQuestionSchema.extend({
+  selectedOptionId: z.string().nullable(),
+});
+
+export type FlashcardQuestionWithAnswer = z.infer<
+  typeof FlashcardQuestionWithAnswer
+>;
 
 export const FlashcardsSchema = z.array(FlashcardQuestionSchema);
 
