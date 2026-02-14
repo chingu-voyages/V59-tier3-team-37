@@ -1,10 +1,10 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import Spinner from "@/components/custom/Spinner";
 import SummaryCard from "@/components/custom/summary-card/SummaryCard";
 import { useSessionStore } from "@/store/useSessionStore";
-import { useEffect, useState } from "react";
-import Spinner from "@/components/custom/Spinner";
-import ReactMarkdown from "react-markdown";
 
 export default function SummaryPage() {
   const { selectedAnswers } = useSessionStore();
