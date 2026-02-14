@@ -1,10 +1,52 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import Spinner from "@/components/custom/Spinner";
 import SummaryCard from "@/components/custom/summary-card/SummaryCard";
 import { useSessionStore } from "@/store/useSessionStore";
 
 export default function SummaryPage() {
   const { selectedAnswers } = useSessionStore();
+  const [feedback, setFeedback] = useState<string>("");
+  const [loadingFeedback, setLoadingFeedback] = useState(false);
+  const [error, setError] = useState<string>("");
+
+  useEffect(() => {
+    const fetchFeedback = async () => {
+      if (selectedAnswers.length === 0) return;
+
+      setLoadingFeedback(true);
+      setError("");
+
+      try {
+        const response = await fetch("/api/gemini-feedback", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ selectedAnswers }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch feedback");
+        }
+
+        const data = await response.json();
+
+        setFeedback(data.feedback);
+      } catch (err) {
+        console.error("Error fetching feedback:", err);
+        setError(
+          "Unable to load personalized feedback. Please try again later.",
+        );
+      } finally {
+        setLoadingFeedback(false);
+      }
+    };
+
+    fetchFeedback();
+  }, [selectedAnswers]);
 
   const total = selectedAnswers.length;
   const correct = selectedAnswers.filter(
@@ -25,38 +67,40 @@ export default function SummaryPage() {
         <SummaryCard title="Accuracy" value={`${accuracy}%`} />
       </div>
 
-      {/* Topic-wise Breakdown */}
-      {/* <h2 className="text-xl font-semibold mb-4">Topic-wise Performance</h2>
-      <div className="space-y-3">
-        {Object.entries(topicStats).map(([topic, data]) => {
-          const percent = Math.round((data.correct / data.total) * 100);
-          return (
-            <div
-              key={topic}
-              className="flex justify-between items-center border rounded-lg p-4"
-            >
-              <span className="font-medium">{topic}</span>
-              <span className="text-sm text-gray-600">
-                {data.correct}/{data.total} ({percent}%)
-              </span>
-            </div>
-          );
-        })} */}
-    </div>
+      {/* AI Feedback */}
+      <div className="mt-8">
+        <h2 className="text-xl font-semibold mb-4">Personalized Feedback</h2>
 
-    //   {/* Incorrect Questions */}
-    //   <h2 className="text-xl font-semibold mt-8 mb-4">Review Mistakes</h2>
-    //   {results.filter(q => !q.isCorrect).length === 0 ? (
-    //     <p className="text-green-600">🎉 No mistakes! Great job.</p>
-    //   ) : (
-    //     <ul className="list-disc pl-6 space-y-2">
-    //       {results
-    //         .filter(q => !q.isCorrect)
-    //         .map(q => (
-    //           <li key={q.id}>{q.question}</li>
-    //         ))}
-    //     </ul>
-    //   )}
-    // </div>
+        {loadingFeedback && (
+          <div className="flex items-center justify-center p-8 border rounded-lg bg-muted/30">
+            <Spinner />
+            <span className="ml-3 text-muted-foreground">
+              Analyzing your performance...
+            </span>
+          </div>
+        )}
+
+        {error && (
+          <div className="p-4 border border-destructive/50 rounded-lg bg-destructive/10 text-destructive">
+            {error}
+          </div>
+        )}
+
+        {feedback && !loadingFeedback && (
+          <div className="border rounded-lg p-6 bg-linear-to-br from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 shadow-sm">
+            <div className="flex items-start gap-3">
+              <div className="shrink-0 w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
+                AI
+              </div>
+              <div className="flex-1">
+                <div className="prose prose-sm max-w-none dark:prose-invert">
+                  <ReactMarkdown>{feedback}</ReactMarkdown>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
