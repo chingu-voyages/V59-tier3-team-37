@@ -28,8 +28,7 @@ interface GenerateQuestionsParams {
 export class RapidApiService {
   private static readonly BASE_URL =
     "https://generate-job-interview-questions-ai-quick-assess.p.rapidapi.com";
-  private static readonly API_KEY =
-    process.env.NEXT_PUBLIC_RAPIDAPI_KEY;
+  private static readonly API_KEY = process.env.NEXT_PUBLIC_RAPIDAPI_KEY;
 
   static async generateQuestions(
     params: GenerateQuestionsParams,
@@ -47,13 +46,13 @@ export class RapidApiService {
     };
 
     try {
-      const response = await fetch(`${this.BASE_URL}/generate`, {
+      const response = await fetch(`${RapidApiService.BASE_URL}/generate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "x-rapidapi-host":
             "generate-job-interview-questions-ai-quick-assess.p.rapidapi.com",
-          "x-rapidapi-key": this.API_KEY,
+          "x-rapidapi-key": RapidApiService.API_KEY,
         },
         body: JSON.stringify(defaultParams),
       });
