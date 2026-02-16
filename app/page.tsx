@@ -4,6 +4,7 @@
 // import ThemeToggle from "@/components/custom/theme/ThemeToggle";
 import Link from "next/link";
 import { Body2, HeadlineXL } from "@/components/typography";
+import { Dashboard } from ".././components/dashboard/dashboard";
 
 export default function HeroSection() {
   return (
@@ -38,11 +39,13 @@ export default function HeroSection() {
 
         {/* Content Card */}
         <div className="w-full max-w-5xl mx-auto">
-          <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12 min-h-125">
+          <div className="bg-white rounded-3xl shadow-2xl min-h-125">
             {/* Add your content here - could be a video, image, or interactive demo */}
             <div className="w-full h-full flex items-center justify-center text-gray-400">
               {/* Placeholder - replace with your actual content */}
-              <p className="text-center">Your content goes here</p>
+              <div className="w-full">
+                <Dashboard />
+              </div>
             </div>
           </div>
         </div>
