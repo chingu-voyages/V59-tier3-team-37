@@ -1,13 +1,15 @@
 "use client";
 
-// import Image from "next/image";
+import Image from "next/image";
 // import ThemeToggle from "@/components/custom/theme/ThemeToggle";
 import Link from "next/link";
 import { Body2, HeadlineXL } from "@/components/typography";
-import { Dashboard } from ".././components/dashboard/dashboard";
+import InterviewFears from "@/components/interview/InterviewFear";
+import BenefitsSection from "@/components/interview/Benefit";
 
 export default function HeroSection() {
   return (
+     <>
     <section className="min-h-screen bg-gradient-to-b from-white from-5% via-[#7364F4]/60 via-50% to-white to-95% pt-32 pb-20 px-6">
       <div className="max-w-6xl mx-auto">
         {/* Hero Content */}
@@ -36,20 +38,28 @@ export default function HeroSection() {
             Get Started • it&apos;s free
           </Link>
         </div>
+{/* Content Card */}
+<div className="w-full max-w-5xl mx-auto">
+  
+    
+    <div className="w-full h-full flex items-center justify-center">
+      <Image
+        src="/Dashboardshot.png"   
+        alt="Showcase image"
+        width={1200}
+        height={800}
+        className="rounded-2xl object-cover w-full h-auto"
+        priority
+      />
+    </div>
 
-        {/* Content Card */}
-        <div className="w-full max-w-5xl mx-auto">
-          <div className="bg-white rounded-3xl shadow-2xl min-h-125">
-            {/* Add your content here - could be a video, image, or interactive demo */}
-            <div className="w-full h-full flex items-center justify-center text-gray-400">
-              {/* Placeholder - replace with your actual content */}
-              <div className="w-full">
-                
-              </div>
-            </div>
-          </div>
-        </div>
+  
+</div>
+
       </div>
     </section>
+    <InterviewFears />
+    <BenefitsSection />
+    </>
   );
 }
