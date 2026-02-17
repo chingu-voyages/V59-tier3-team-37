@@ -44,7 +44,7 @@ export default function HeroSection() {
             <div className="w-full h-full flex items-center justify-center text-gray-400">
               {/* Placeholder - replace with your actual content */}
               <div className="w-full">
-                <Dashboard />
+                
               </div>
             </div>
           </div>

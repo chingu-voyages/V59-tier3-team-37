@@ -1,10 +1,10 @@
-import logo from "../../public/logo.png";
+import { ArrowLeft, Briefcase, PieChart, StickyNote } from "lucide-react";
 import avatar from "../../public/avatar.png";
+import green_badge from "../../public/green_badge.png";
+import logo from "../../public/logo.png";
 import pie from "../../public/pie.png";
 import red_badge from "../../public/red_badge.png";
 import yellow_badge from "../../public/yellow_badge.png";
-import green_badge from "../../public/green_badge.png";
-import { PieChart, Briefcase, StickyNote, ArrowLeft } from "lucide-react";
 
 export function Dashboard() {
   return (
