@@ -22,7 +22,7 @@ type SessionState = {
   startSession: () => void;
   resetSession: () => void;
   setResettingSession: () => void;
-  loadFlashcards: () => void;
+  loadFlashcards: (roleValues?: string[]) => void;
   shuffleCards: (filtered: Flashcards, count: number) => Flashcards;
   getAvailableRoles: () => void;
   setSelectedAnswer: (answer: FlashcardQuestionWithAnswer) => void;
@@ -70,7 +70,7 @@ export const useSessionStore = create<SessionState>()(
       },
       setResettingSession: () => set({ resettingSession: false }),
       setSessionEnded: () => set({ sessionEnded: true, showWarning: false }),
-      loadFlashcards: () => {
+      loadFlashcards: (roleValues?: string[]) => {
         try {
           const result = FlashcardsSchema.safeParse(data);
 
@@ -79,18 +79,26 @@ export const useSessionStore = create<SessionState>()(
             throw new Error("Invalid flashcards JSON");
           }
 
-          const filtered = result.data.filter((q) => q.role === get().role);
+          const roleFilter =
+            roleValues && roleValues.length > 0
+              ? (q: (typeof result.data)[0]) => roleValues.includes(q.role)
+              : (q: (typeof result.data)[0]) => q.role === get().role;
+
+          const filtered = result.data.filter(roleFilter);
 
           set({
             flashcards: filtered,
             flashCardError: null,
             flashcardsLoading: false,
-            selectedAnswers: [
-              {
-                ...filtered[0],
-                selectedOptionId: null,
-              },
-            ],
+            selectedAnswers:
+              filtered.length > 0
+                ? [
+                    {
+                      ...filtered[0],
+                      selectedOptionId: null,
+                    },
+                  ]
+                : [],
           });
         } catch (err) {
           set({ flashcardsLoading: false });
