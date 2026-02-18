@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { getRoleValuesForFilter } from "@/lib/roleMap";
 import { useSessionStore } from "@/store/useSessionStore";
 
@@ -14,7 +14,10 @@ export default function Questions({
 }: QuestionsProps) {
   const roles = [...selectedRoles];
   const { flashcards: cards, loadFlashcards } = useSessionStore();
-  const roleValues = getRoleValuesForFilter(selectedRoles);
+  const roleValues = useMemo(
+    () => getRoleValuesForFilter(selectedRoles),
+    [selectedRoles],
+  );
 
   useEffect(() => {
     if (roleValues.length > 0) {
@@ -22,7 +25,7 @@ export default function Questions({
     } else {
       loadFlashcards();
     }
-  }, [loadFlashcards, roleValues.join(",")]);
+  }, [loadFlashcards, roleValues]);
 
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);

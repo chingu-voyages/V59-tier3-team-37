@@ -1,3 +1,4 @@
+import Image from "next/image";
 import green_badge from "../../public/green_badge.png";
 import pie from "../../public/pie.png";
 import red_badge from "../../public/red_badge.png";
@@ -12,7 +13,6 @@ export default function Summary({ totalScore }: SummaryProps) {
   const { correct, total } = totalScore;
 
   return (
-    <>
       <div className="flex-1 p-8 overflow-auto">
         <h1 className="text-5xl font-bold py-4 text-black">
           Hello, {userName}
@@ -20,7 +20,7 @@ export default function Summary({ totalScore }: SummaryProps) {
 
         <div className="bg-[#e0e0ff] rounded-3xl flex items-center gap-4">
           <div className="flex-shrink-0">
-            <img src={pie.src} alt="Pie" className="w-40 opacity-50" />
+            <Image src={pie} alt="Pie" className="w-40 opacity-50" />
           </div>
           <div className="flex flex-col">
             <h2 className="text-[#5b4df3] text-2xl font-bold">Your summary</h2>
@@ -84,18 +84,18 @@ export default function Summary({ totalScore }: SummaryProps) {
               <h3 className="text-4xl font-bold text-black mt-1">3</h3>
             </div>
             <div className="flex items-center justify-center">
-              <img
-                src={red_badge.src}
+              <Image
+                src={red_badge}
                 alt="Red Badge"
                 className="w-30 object-contain scale-160"
               />
-              <img
-                src={yellow_badge.src}
+              <Image
+                src={yellow_badge}
                 alt="Elite Badge"
                 className="w-50 object-contain scale-180"
               />
-              <img
-                src={green_badge.src}
+              <Image
+                src={green_badge}
                 alt="Green Badge"
                 className="w-30 object-contain scale-160"
               />
@@ -107,6 +107,5 @@ export default function Summary({ totalScore }: SummaryProps) {
           </div>
         </div>
       </div>
-    </>
   );
 }
