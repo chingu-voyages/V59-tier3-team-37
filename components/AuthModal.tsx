@@ -9,7 +9,12 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { auth } from "@/lib/firebase";
 
-export default function AuthPage() {
+interface AuthModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const router = useRouter();
 
   const [activeTab, setActiveTab] = useState<"signup" | "login">("signup");
@@ -36,9 +41,20 @@ export default function AuthPage() {
     }
   };
 
+  if (!isOpen) return null; // hide modal if closed
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black to-zinc-900 flex items-center justify-center px-4">
-      <div className="w-full max-w-md bg-zinc-100 rounded-2xl p-8 shadow-xl">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+      <div className="w-full max-w-md bg-zinc-100 rounded-2xl p-8 shadow-xl relative">
+        {/* Close button */}
+        <button
+          type="button"
+          className="absolute top-3 right-3 text-gray-500 text-xl font-bold"
+          onClick={onClose}
+        >
+          ✕
+        </button>
+
         {/* Logo */}
         <div className="flex items-center justify-center mb-6">
           <Image
@@ -86,7 +102,6 @@ export default function AuthPage() {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Username only for signup */}
           {activeTab === "signup" && (
             <div>
               <label htmlFor="username" className="text-sm text-zinc-600">
@@ -102,7 +117,6 @@ export default function AuthPage() {
             </div>
           )}
 
-          {/* Email */}
           <div>
             <label htmlFor="email" className="text-sm text-zinc-600">
               Email
@@ -116,7 +130,6 @@ export default function AuthPage() {
             />
           </div>
 
-          {/* Password */}
           <div>
             <label htmlFor="password" className="text-sm text-zinc-600">
               Password
