@@ -1,20 +1,18 @@
 import Image from "next/image";
+import type { ReactNode } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { ReactNode } from "react";
 
 interface FearCardProps {
-  title: ReactNode;       // <-- allow JSX
+  title: ReactNode; // <-- allow JSX
   description: string;
-  
 }
 
 export function FearCard({ title, description }: FearCardProps) {
   return (
     <Card className="relative rounded-xl border shadow-sm hover:shadow-md transition">
-      
       {/* Flag image */}
       <Image
-        src="/problems.svg"  // your flag in /public
+        src="/problems.svg" // your flag in /public
         alt="flag"
         width={70}
         height={70}
@@ -22,13 +20,9 @@ export function FearCard({ title, description }: FearCardProps) {
       />
 
       <CardContent className="p-4 text-left">
-        <h3 className="font-semibold text-lg mb-2 text-gray-900">
-          {title}
-        </h3>
+        <h3 className="font-semibold text-lg mb-2 text-gray-900">{title}</h3>
 
-        <p className="text-sm text-[#39393B] leading-relaxed">
-          {description}
-        </p>
+        <p className="text-sm text-[#39393B] leading-relaxed">{description}</p>
       </CardContent>
     </Card>
   );

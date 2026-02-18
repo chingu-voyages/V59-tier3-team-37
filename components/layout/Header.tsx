@@ -32,9 +32,9 @@ export default function Header() {
       </nav>
       {/* Login Button */}
       <div className="shrink-0 relative">
-        <div className="absolute -inset-1 rounded-full bg-[#3F1CD4] opacity-30 blur-xl z-0"></div>
+        <div className="-inset-1 rounded-full bg-[#3F1CD4] opacity-30 blur-xl z-0 cursor-pointer"></div>
         <Link
-          href="/login"
+          href="/auth"
           className="px-6 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary-foreground hover:text-primary transition-colors"
         >
           Login Now
