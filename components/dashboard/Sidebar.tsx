@@ -1,4 +1,8 @@
+"use client";
+
 import { ArrowLeft, Briefcase, PieChart, StickyNote } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { auth } from "@/lib/firebase";
 
 interface SidebarProps {
   active?: "summary" | "roles" | "notes" | "questions";
@@ -6,6 +10,17 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ active, onSelect }: SidebarProps) {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await auth.signOut();
+      router.push("/"); // optional: redirect to homepage
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
   return (
     <div className="w-14 bg-[#f1f2f6] border-r border-[rgba(174,174,174,0.5)] flex flex-col items-center py-6 gap-13">
       <button
@@ -46,8 +61,15 @@ export default function Sidebar({ active, onSelect }: SidebarProps) {
         />
       </button>
 
+      {/* Logout Button */}
       <div className="mt-auto">
-        <ArrowLeft size={22} className="text-[#39393B] cursor-pointer" />
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="bg-transparent border-none cursor-pointer"
+        >
+          <ArrowLeft size={22} className="text-[#39393B]" />
+        </button>
       </div>
     </div>
   );

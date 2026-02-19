@@ -187,3 +187,7 @@
   opacity: 0.5; /* Optional: visually indicates a disabled state */
   background: none;
 }
+
+html {
+  scroll-behavior: smooth;
+}

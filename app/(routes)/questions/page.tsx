@@ -74,7 +74,7 @@ export default function QuestionsPage() {
           relevant questions.
         </p>
 
-        <Button onClick={() => router.push("/roles")}>
+        <Button type="button" onClick={() => router.push("/roles")}>
           Go back to select role
         </Button>
       </div>
