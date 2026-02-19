@@ -2,7 +2,15 @@ import { FearCard } from "./FearCard";
 
 export default function InterviewFears() {
   return (
-    <section className="w-full py-24 bg-white">
+    <section
+      className="
+    w-full py-24 
+    bg-gradient-to-b
+    from-white from-5%
+    via-[#7364F4]/25 via-50%
+    to-white to-95%
+  "
+    >
       <div className="max-w-6xl mx-auto px-6 text-center">
         {/* Heading */}
         <h2 className="text-4xl md:text-5xl font-bold mb-6">

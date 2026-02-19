@@ -5,11 +5,21 @@ import { Card, CardContent } from "@/components/ui/card";
 
 export default function BenefitsSection() {
   return (
-    <section className="w-full py-24 bg-[#FFFFFF]">
+    <section
+      id="benefit"
+      className="
+    scroll-mt-24
+    w-full py-24
+    bg-gradient-to-b
+    from-white from-5%
+    via-[#7364F4]/20 via-50%
+    to-white to-95%
+  "
+    >
       <div className="max-w-6xl mx-auto px-6">
         {/* Heading */}
         <div className="text-center mb-14">
-          <h2 className="text-4xl font-bold mb-4">Benefits</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">Benefits</h2>
           <p className="text-[#39393B] max-w-xl mx-auto">
             Everything is built to help you master the skill.
             <br /> Our AI analyzes job descriptions and roles to
@@ -19,7 +29,7 @@ export default function BenefitsSection() {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[140px] max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[140px] max-w-5xl mx-auto">
           {/* Card 1 - wide */}
           <Card className="md:col-span-2 bg-[#DCD9FD] border-0">
             <CardContent className="h-full flex items-center justify-between p-10">

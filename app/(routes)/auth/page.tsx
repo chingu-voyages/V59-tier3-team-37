@@ -6,41 +6,16 @@ import {
 } from "firebase/auth";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { auth } from "@/lib/firebase";
 
-interface AuthModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  initialTab?: "signup" | "login"; // new prop to control initial tab
-}
-
-export default function AuthModal({
-  isOpen,
-  onClose,
-  initialTab,
-}: AuthModalProps) {
+export default function AuthPage() {
   const router = useRouter();
 
-  // useState now defaults to initialTab
-  const [activeTab, setActiveTab] = useState<"signup" | "login">(
-    initialTab || "signup",
-  );
+  const [activeTab, setActiveTab] = useState<"signup" | "login">("signup");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  // Reset tab whenever modal opens
-  useEffect(() => {
-    if (!isOpen) return;
-
-    // Schedule the state update after render to avoid cascading renders
-    const timer = setTimeout(() => {
-      setActiveTab(initialTab || "signup");
-    }, 0);
-
-    return () => clearTimeout(timer);
-  }, [isOpen, initialTab]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,13 +24,10 @@ export default function AuthModal({
       if (activeTab === "signup") {
         await createUserWithEmailAndPassword(auth, email, password);
         alert("Account created!");
-        onClose();
-        router.push("/dashboard");
       } else {
         await signInWithEmailAndPassword(auth, email, password);
         alert("Logged in!");
-        onClose();
-        router.push("/dashboard");
+        router.push("/");
       }
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -64,20 +36,9 @@ export default function AuthModal({
     }
   };
 
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="w-full max-w-md bg-zinc-100 rounded-2xl p-8 shadow-xl relative">
-        {/* Close button */}
-        <button
-          type="button"
-          className="absolute top-3 right-3 text-gray-500 text-xl font-bold"
-          onClick={onClose}
-        >
-          ✕
-        </button>
-
+    <div className="min-h-screen bg-gradient-to-b from-black to-zinc-900 flex items-center justify-center px-4">
+      <div className="w-full max-w-md bg-zinc-100 rounded-2xl p-8 shadow-xl">
         {/* Logo */}
         <div className="flex items-center justify-center mb-6">
           <Image
@@ -125,6 +86,7 @@ export default function AuthModal({
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Username only for signup */}
           {activeTab === "signup" && (
             <div>
               <label htmlFor="username" className="text-sm text-zinc-600">
@@ -140,6 +102,7 @@ export default function AuthModal({
             </div>
           )}
 
+          {/* Email */}
           <div>
             <label htmlFor="email" className="text-sm text-zinc-600">
               Email
@@ -153,6 +116,7 @@ export default function AuthModal({
             />
           </div>
 
+          {/* Password */}
           <div>
             <label htmlFor="password" className="text-sm text-zinc-600">
               Password

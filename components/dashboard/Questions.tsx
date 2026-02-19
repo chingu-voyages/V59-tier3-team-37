@@ -81,7 +81,7 @@ export default function Questions({
         <div className="flex w-2/3 max-w-xl gap-2 px-4">
           {Array.from({ length: cards.length }).map((_, i) => (
             <div
-              key={i}
+              key={cards[i].id}
               className={`h-2 flex-1 rounded-full transition-all duration-300 ${
                 i <= index ? "bg-[#5235ef]" : "bg-[#c3bcfa]"
               }`}

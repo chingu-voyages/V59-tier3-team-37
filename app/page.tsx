@@ -1,13 +1,21 @@
 "use client";
 
 import Image from "next/image";
+
+import AuthModal from "@/components/AuthModal";
+
 // import ThemeToggle from "@/components/custom/theme/ThemeToggle";
-import Link from "next/link";
+
+import { useState } from "react";
+import FAQ from "@/components/faqs/Faqs";
+import HowItWorks from "@/components/home/HowItWorks";
 import BenefitsSection from "@/components/interview/Benefit";
 import InterviewFears from "@/components/interview/InterviewFear";
 import { Body2, HeadlineXL } from "@/components/typography";
 
 export default function HeroSection() {
+  const [openAuth, setOpenAuth] = useState(false);
+
   return (
     <>
       <section className="min-h-screen bg-gradient-to-b from-white from-5% via-[#7364F4]/60 via-50% to-white to-95% pt-32 pb-20 px-6">
@@ -31,13 +39,15 @@ export default function HeroSection() {
             </Body2>
 
             {/* CTA Button */}
-            <Link
-              href="/roles"
+            <button
+              type="button"
+              onClick={() => setOpenAuth(true)}
               className="inline-block px-8 py-4 bg-linear-to-b from-[#7364F4] to-purple-400 hover:from-[#6354E4] hover:to-purple-500 text-white text-lg font-semibold rounded-full transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105"
             >
               Get Started • it&apos;s free
-            </Link>
+            </button>
           </div>
+
           {/* Content Card */}
           <div className="w-full max-w-5xl mx-auto">
             <div className="w-full h-full flex items-center justify-center">
@@ -53,8 +63,18 @@ export default function HeroSection() {
           </div>
         </div>
       </section>
+
       <InterviewFears />
       <BenefitsSection />
+      <HowItWorks />
+      <FAQ />
+
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={openAuth}
+        onClose={() => setOpenAuth(false)}
+        initialTab="login" // default tab is login for returning users
+      />
     </>
   );
 }

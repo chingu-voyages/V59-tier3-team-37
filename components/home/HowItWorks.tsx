@@ -1,45 +1,82 @@
-const steps = [
-  {
-    title: "Pick a Role",
-    description:
-      "Choose your role (Frontend, Backend, DevOps, Designer, Fullstack) to get relevant questions.",
-  },
-  {
-    title: "Answer Questions",
-    description:
-      "Go through randomized flashcards and select the correct answers. Learn as you go!",
-  },
-  {
-    title: "Track Your Progress",
-    description:
-      "See which questions you got right or wrong, and improve over time.",
-  },
-];
+"use client";
+
+import Image from "next/image";
 
 export default function HowItWorks() {
   return (
-    <section className="py-16 bg-gray-50 dark:bg-gray-900">
-      <div className="max-w-4xl mx-auto px-4 text-center">
-        <h2 className="text-3xl font-bold mb-8 text-gray-900 dark:text-gray-100">
-          How It Works
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {steps.map((step, idx) => (
-            <div
-              key={step.title}
-              className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg transition"
-            >
-              <div className="text-4xl font-bold text-blue-500 mb-4">
-                {idx + 1}
+    <section
+      id="how-it-works"
+      className="
+    scroll-mt-24
+    w-full py-24
+    bg-gradient-to-b
+    from-white from-5%
+    via-[#7364F4]/5 via-50%
+    to-white to-95%
+  "
+    >
+      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+        {/* LEFT SIDE */}
+        <div>
+          <h2 className="text-4xl md:text-5xl font-bold text-black mb-12">
+            Simplify your practicing
+          </h2>
+
+          <div className="space-y-8">
+            {/* Step 1 */}
+            <div className="flex gap-4">
+              <div className="w-10 h-10 flex items-center justify-center rounded-md bg-gray-100 font-semibold">
+                01
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-100">
-                {step.title}
-              </h3>
-              <p className="text-gray-700 dark:text-gray-300">
-                {step.description}
-              </p>
+              <div>
+                <h3 className="font-semibold text-lg">Pick a Role</h3>
+                <p className="text-gray-500 text-sm mt-1">
+                  Choose your role (Frontend, Backend, DevOps, Designer,
+                  Fullstack) to get relevant questions.
+                </p>
+              </div>
             </div>
-          ))}
+
+            {/* Step 2 */}
+            <div className="flex gap-4">
+              <div className="w-10 h-10 flex items-center justify-center rounded-md bg-gray-100 font-semibold">
+                02
+              </div>
+              <div>
+                <h3 className="font-semibold text-lg">Answer Questions</h3>
+                <p className="text-gray-500 text-sm mt-1">
+                  Go through randomized flashcards and select the correct
+                  answers. Learn as you go!
+                </p>
+              </div>
+            </div>
+
+            {/* Step 3 */}
+            <div className="flex gap-4">
+              <div className="w-10 h-10 flex items-center justify-center rounded-md bg-gray-100 font-semibold">
+                03
+              </div>
+              <div>
+                <h3 className="font-semibold text-lg">Track Your Progress</h3>
+                <p className="text-gray-500 text-sm mt-1">
+                  See which questions you got right or wrong, and improve over
+                  time.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* RIGHT SIDE IMAGE */}
+        <div className="flex justify-center">
+          <Image
+            src="/flashcardsmodel.png"
+            alt="Flashcard preview"
+            width={500}
+            height={500}
+            className="w-full max-w-md object-contain"
+            priority
+          />
         </div>
       </div>
     </section>
