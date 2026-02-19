@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import AuthPage from "../AuthModal";
 import { useState } from "react";
+import AuthPage from "../AuthModal";
 
 export default function Header() {
   const [openAuthState, setOpenAuthState] = useState(false);
