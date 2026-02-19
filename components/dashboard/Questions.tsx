@@ -68,91 +68,96 @@ export default function Questions({
 
   return (
     <div className="px-8 pt-4">
-      <p className="font-bold text-4xl pb-2">Questions</p>
-      <p className="text-xl py-4">
+      {/* Header section */}
+      <p className="font-bold text-4xl pb-2">Questions - flashcards</p>
+      <p className="text-l py-4">
         Generating questions for:{" "}
         <span className="font-semibold">{roles.join(", ")}</span>
       </p>
 
-      <div className="min-h-screen p-6 flex flex-col items-center gap-6">
-        <div className="flex items-stretch justify-center gap-4 w-full max-w-4xl">
-          {/* Left arrow - previous question */}
-          <button
-            type="button"
-            onClick={previous}
-            disabled={index === 0}
-            className="shrink-0 self-center p-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white transition-colors"
-            aria-label="Previous question"
-          >
-            <ChevronLeft className="w-8 h-8 text-gray-700" />
-          </button>
+      {/* Progress Bar */}
+      <div className="flex flex-col items-center w-full mb-8">
+        <p className="font-bold text-[#5235ef] mb-3">Completed cards</p>
+        <div className="flex w-2/3 max-w-xl gap-2 px-4">
+          {Array.from({ length: cards.length }).map((_, i) => (
+            <div
+              key={i}
+              className={`h-2 flex-1 rounded-full transition-all duration-300 ${
+                i <= index ? "bg-[#5235ef]" : "bg-[#c3bcfa]"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
 
-          <div className="max-w-xl w-full border rounded-lg p-6 shadow flex-1 min-w-0">
-            <p className="text-sm opacity-60">
-              Question {index + 1} / {cards.length}
-            </p>
+      <div className="p-6 flex flex-col items-center gap-6">
+        <div className="max-w-xl w-full relative border rounded-lg p-6 shadow min-h-[300px] bg-white pb-16">
+          <p className="text-sm opacity-60">
+            Question {index + 1} / {cards.length}
+          </p>
 
-            <h2 className="text-xl font-semibold mt-2">{current.question}</h2>
+          <h2 className="text-xl font-semibold mt-2">{current.question}</h2>
 
-            <div className="mt-4 flex flex-col gap-2">
-              {current.options.map((opt) => {
-                const isCorrect = opt.isCorrect;
-                const isSelected = selected === opt.id;
+          <div className="mt-4 flex flex-col gap-2">
+            {current.options.map((opt) => {
+              const isCorrect = opt.isCorrect;
+              const isSelected = selected === opt.id;
 
-                let style = "border p-3 rounded cursor-pointer";
-                if (selected) {
-                  if (isCorrect) style += " bg-green-200";
-                  else if (isSelected) style += " bg-red-200";
-                }
+              let style = "border p-3 rounded cursor-pointer text-left";
+              if (selected) {
+                if (isCorrect) style += " bg-green-200 border-green-500";
+                else if (isSelected) style += " bg-red-200 border-red-500";
+              }
 
-                return (
-                  <button
-                    type="button"
-                    key={opt.id}
-                    className={style}
-                    onClick={() => handleSelect(opt.id)}
-                    disabled={!!selected}
-                  >
-                    {opt.text}
-                  </button>
-                );
-              })}
-            </div>
-
-            {selected && (
-              <div className="mt-4 p-3 bg-gray-100 rounded">
-                <strong>Explanation:</strong> {current.explanation}
-              </div>
-            )}
+              return (
+                <button
+                  type="button"
+                  key={opt.id}
+                  className={style}
+                  onClick={() => handleSelect(opt.id)}
+                  disabled={!!selected}
+                >
+                  {opt.text}
+                </button>
+              );
+            })}
           </div>
 
-          {/* Right arrow - next question */}
-          <button
-            type="button"
-            onClick={next}
-            disabled={index === cards.length - 1}
-            className="shrink-0 self-center p-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white transition-colors"
-            aria-label="Next question"
-          >
-            <ChevronRight className="w-8 h-8 text-gray-700" />
-          </button>
+          {selected && (
+            <div className="mt-4 p-3 bg-gray-100 rounded text-sm">
+              <strong>Explanation:</strong> {current.explanation}
+            </div>
+          )}
+
+          {/* Arrows: bottom-right corner, tight spacing */}
+          <div className="absolute bottom-3 right-3 flex -space-x-1 items-center">
+            <button
+              type="button"
+              onClick={previous}
+              disabled={index === 0}
+              className="p-2 rounded-md hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent transition-colors"
+              aria-label="Previous question"
+            >
+              <ChevronLeft className="w-8 h-8 text-[#5235ef]" />
+            </button>
+            <button
+              type="button"
+              onClick={next}
+              disabled={index === cards.length - 1}
+              className="p-2 rounded-md hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent transition-colors"
+              aria-label="Next question"
+            >
+              <ChevronRight className="w-8 h-8 text-[#5235ef]" />
+            </button>
+          </div>
         </div>
 
-        {selected && index < cards.length - 1 && (
-          <button
-            type="button"
-            onClick={next}
-            className="px-4 py-2 bg-black text-white rounded"
-          >
-            Next Question
-          </button>
-        )}
-
+        {/* Action Buttons (Results) */}
         {selected && index === cards.length - 1 && (
           <button
             type="button"
             onClick={handleCompleted}
-            className="px-4 py-2 bg-indigo-500 text-white rounded font-semibold"
+            className="px-6 py-2 bg-[#5235ef] text-white rounded-lg font-semibold"
           >
             🎉 See Results
           </button>
