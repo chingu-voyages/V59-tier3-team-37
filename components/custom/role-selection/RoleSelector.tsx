@@ -30,11 +30,9 @@ interface RoleSelectProps {
 }
 
 export function RoleSelect({
-  options,
   placeholder = "Select an option",
   label,
   onValueChange,
-  defaultValue,
 }: RoleSelectProps) {
   const router = useRouter();
   const { role, setRole, getAvailableRoles, roles, setResettingSession } =
