@@ -57,7 +57,7 @@ export default function Dashboard() {
   return (
     <div className="w-full h-screen flex flex-col">
       <TopNavbar />
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1">
         <Sidebar active={activeTab} onSelect={handleSelect} />
         <div className="flex-1 p-8 overflow-auto">
           {activeTab === "summary" && <Summary totalScore={totalScore} />}
