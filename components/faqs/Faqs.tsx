@@ -55,20 +55,21 @@ export default function FAQ() {
 
             return (
               <button
-  key={faq.id} // unique key
-  onClick={() => handleToggle(index)}
-  className="bg-purple-100 rounded-2xl p-6 w-full text-left cursor-pointer transition-all shadow hover:shadow-lg"
-  type="button"
->
-  <div className="flex justify-between items-center">
-    <h3 className="font-semibold text-lg">{faq.question}</h3>
-    <ChevronDown className={`transition-transform ${isOpen ? "rotate-180" : ""}`} />
-  </div>
-  {isOpen && (
-    <p className="text-gray-600 text-sm mt-4">{faq.answer}</p>
-  )}
-</button>
-
+                key={faq.id} // unique key
+                onClick={() => handleToggle(index)}
+                className="bg-purple-100 rounded-2xl p-6 w-full text-left cursor-pointer transition-all shadow hover:shadow-lg"
+                type="button"
+              >
+                <div className="flex justify-between items-center">
+                  <h3 className="font-semibold text-lg">{faq.question}</h3>
+                  <ChevronDown
+                    className={`transition-transform ${isOpen ? "rotate-180" : ""}`}
+                  />
+                </div>
+                {isOpen && (
+                  <p className="text-gray-600 text-sm mt-4">{faq.answer}</p>
+                )}
+              </button>
             );
           })}
         </div>

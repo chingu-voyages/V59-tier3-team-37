@@ -105,12 +105,11 @@ export default function MobileMenu({
 
       {/* Click outside to close */}
       <button
-  type="button"
-  className="flex-1 bg-transparent border-none p-0 m-0"
-  onClick={onClose}
-  aria-label="Close menu"
-></button>
-
+        type="button"
+        className="flex-1 bg-transparent border-none p-0 m-0"
+        onClick={onClose}
+        aria-label="Close menu"
+      ></button>
     </div>
   );
 }
