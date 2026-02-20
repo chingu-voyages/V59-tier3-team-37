@@ -3,6 +3,7 @@
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -47,23 +48,30 @@ export default function AuthModal({
 
     try {
       if (activeTab === "signup") {
-        await createUserWithEmailAndPassword(auth, email, password);
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password,
+        );
+
+        await updateProfile(userCredential.user, {
+          displayName: username,
+        });
+
         alert("Account created!");
-        onClose();
-        router.push("/dashboard");
       } else {
         await signInWithEmailAndPassword(auth, email, password);
         alert("Logged in!");
-        onClose();
-        router.push("/dashboard");
       }
+
+      onClose();
+      router.push("/dashboard");
     } catch (error: unknown) {
       if (error instanceof Error) {
         alert(error.message);
       }
     }
   };
-
   if (!isOpen) return null;
 
   return (

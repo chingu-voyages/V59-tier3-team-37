@@ -11,7 +11,10 @@ interface SummaryProps {
 
 export default function Summary({ totalScore }: SummaryProps) {
   const auth = getAuth();
-  const userName = auth?.currentUser?.displayName || null;
+  const userName =
+    auth?.currentUser?.displayName ||
+    auth?.currentUser?.email?.split("@")[0] ||
+    "User";
   const { correct, total } = totalScore;
 
   return (
