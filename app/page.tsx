@@ -71,10 +71,10 @@ export default function HeroSection() {
 
       {/* Auth Modal */}
       <AuthModal
-        isOpen={openAuth}
-        onClose={() => setOpenAuth(false)}
-        initialTab="login" // default tab is login for returning users
-      />
+  isOpen={openAuth}
+  onClose={() => setOpenAuth(false)}
+  initialTab="signup"
+/>
     </>
   );
 }
