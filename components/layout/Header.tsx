@@ -38,7 +38,7 @@ export default function Header() {
           }
         });
       },
-      { rootMargin: "-50% 0px -50% 0px", threshold: 0 },
+      { rootMargin: "-50% 0px -50% 0px", threshold: 0 }
     );
 
     sections.forEach((id) => {
@@ -100,21 +100,21 @@ export default function Header() {
             <button
               type="button"
               onClick={() => {
-                setAuthTab("login");
-                setOpenAuthState(true);
-              }}
+  setAuthTab("login");
+  setOpenAuthState(true);
+}}
               className="px-5 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary-foreground hover:text-primary transition-colors"
             >
               Login
             </button>
           ) : (
             <button
-              type="button"
-              onClick={() => router.push("/dashboard")}
-              className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center border-2 border-purple-600"
-            >
-              <UserIcon size={40} className="text-purple-600" />
-            </button>
+  type="button"
+  onClick={() => router.push("/dashboard")}
+  className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center border-2 border-purple-600"
+>
+  <UserIcon  size={40} className="text-purple-600" />
+</button>
           )}
         </div>
 
@@ -127,18 +127,18 @@ export default function Header() {
       </div>
 
       {/* Auth Modal */}
-      <AuthPage
-        isOpen={openAuthState}
-        onClose={() => setOpenAuthState(false)}
-        initialTab={authTab}
-      />
+     <AuthPage
+  isOpen={openAuthState}
+  onClose={() => setOpenAuthState(false)}
+  initialTab={authTab}
+/>
 
       {/* Mobile Menu */}
       <MobileMenu
         isOpen={openMobileMenu}
         onClose={() => setOpenMobileMenu(false)}
         user={user}
-        onLoginClick={() => setOpenAuthState(true)}
+       onLoginClick={() => setOpenAuthState(true)}
       />
     </header>
   );

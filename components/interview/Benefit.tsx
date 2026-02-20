@@ -141,7 +141,7 @@ export default function BenefitsSection() {
                 <br /> mistakes
               </p>
 
-              {/* Centered loading image */}
+               {/* Centered loading image */}
               <div className="absolute inset-0 flex justify-center items-center">
                 <div className="relative w-[200px] h-[100px]">
                   <Image
@@ -151,6 +151,8 @@ export default function BenefitsSection() {
                     height={200}
                     className="absolute top-5 "
                   />
+
+                 
                 </div>
               </div>
             </CardContent>
