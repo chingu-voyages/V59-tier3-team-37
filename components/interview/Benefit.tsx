@@ -141,29 +141,18 @@ export default function BenefitsSection() {
                 <br /> mistakes
               </p>
 
-              {/* Middle-right text */}
-              <p className="absolute top-15 right-16 -translate-y-1/2 text-white text-2xl ">
-                25%
-              </p>
-
-              {/* Centered loading image */}
+               {/* Centered loading image */}
               <div className="absolute inset-0 flex justify-center items-center">
-                <div className="relative w-[100px] h-[100px]">
+                <div className="relative w-[200px] h-[100px]">
                   <Image
-                    src="/Ellipses.svg"
+                    src="/progressbar.png"
                     alt="loading part 1"
-                    width={100}
-                    height={100}
-                    className="absolute top-18 "
+                    width={400}
+                    height={200}
+                    className="absolute top-5 "
                   />
 
-                  <Image
-                    src="/Ellipse.svg"
-                    alt="loading part 2"
-                    width={80}
-                    height={80}
-                    className="absolute top-24 -left-6 inset-0 m-auto -rotate-6"
-                  />
+                 
                 </div>
               </div>
             </CardContent>
