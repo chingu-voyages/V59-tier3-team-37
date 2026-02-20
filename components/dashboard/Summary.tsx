@@ -1,9 +1,9 @@
+import { getAuth } from "firebase/auth";
 import Image from "next/image";
 import green_badge from "../../public/green_badge.png";
 import pie from "../../public/pie.png";
 import red_badge from "../../public/red_badge.png";
 import yellow_badge from "../../public/yellow_badge.png";
-import { getAuth } from "firebase/auth";
 
 interface SummaryProps {
   totalScore: { correct: number; total: number };
@@ -11,7 +11,7 @@ interface SummaryProps {
 
 export default function Summary({ totalScore }: SummaryProps) {
   const auth = getAuth();
-  const userName = auth.currentUser.displayName;
+  const userName = auth?.currentUser?.displayName || null;
   const { correct, total } = totalScore;
 
   return (
