@@ -4,12 +4,11 @@ import { onAuthStateChanged, type User } from "firebase/auth";
 import { Menu, User as UserIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { auth } from "@/lib/firebase";
 import AuthPage from "../AuthModal";
 import MobileMenu from "./MobileMenu";
-import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [openAuthState, setOpenAuthState] = useState(false);
@@ -52,8 +51,8 @@ export default function Header() {
   }, []);
 
   if (pathname.startsWith("/dashboard")) {
-  return null;
-}
+    return null;
+  }
 
   return (
     <header className="sticky top-0 z-50 border-b border-gray-200 bg-white dark:bg-black px-6 py-4">

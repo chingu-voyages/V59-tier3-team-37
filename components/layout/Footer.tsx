@@ -8,7 +8,6 @@ import { teamMembers } from "@/data/teamMembers";
 export default function Footer() {
   const pathname = usePathname();
 
-  
   if (pathname.startsWith("/dashboard")) {
     return null;
   }
