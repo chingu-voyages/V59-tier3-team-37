@@ -3,6 +3,7 @@
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile
 } from "firebase/auth";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -43,27 +44,34 @@ export default function AuthModal({
   }, [isOpen, initialTab]);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
-      if (activeTab === "signup") {
-        await createUserWithEmailAndPassword(auth, email, password);
-        alert("Account created!");
-        onClose();
-        router.push("/dashboard");
-      } else {
-        await signInWithEmailAndPassword(auth, email, password);
-        alert("Logged in!");
-        onClose();
-        router.push("/dashboard");
-      }
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        alert(error.message);
-      }
+  try {
+    if (activeTab === "signup") {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      await updateProfile(userCredential.user, {
+        displayName: username,
+      });
+
+      alert("Account created!");
+    } else {
+      await signInWithEmailAndPassword(auth, email, password);
+      alert("Logged in!");
     }
-  };
 
+    onClose();
+    router.push("/dashboard");
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      alert(error.message);
+    }
+  }
+};
   if (!isOpen) return null;
 
   return (

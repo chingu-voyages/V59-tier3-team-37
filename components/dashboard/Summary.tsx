@@ -11,12 +11,18 @@ interface SummaryProps {
 
 export default function Summary({ totalScore }: SummaryProps) {
   const auth = getAuth();
-  const userName = auth?.currentUser?.displayName || null;
+ const userName =
+  auth?.currentUser?.displayName ||
+  auth?.currentUser?.email?.split("@")[0] ||
+  "User";
   const { correct, total } = totalScore;
 
   return (
+
     <div className="flex-1 p-8 overflow-auto">
-      <h1 className="text-5xl font-bold py-4 text-black">Hello, {userName}</h1>
+      <h1 className="text-5xl font-bold py-4 text-black">
+  Hello, {userName}
+</h1>
 
       <div className="bg-[#e0e0ff] rounded-3xl flex items-center gap-4">
         <div className="flex-shrink-0">

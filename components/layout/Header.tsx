@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { auth } from "@/lib/firebase";
 import AuthPage from "../AuthModal";
 import MobileMenu from "./MobileMenu";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [openAuthState, setOpenAuthState] = useState(false);
@@ -16,6 +17,7 @@ export default function Header() {
   const [user, setUser] = useState<User | null>(null);
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
   const [authTab, setAuthTab] = useState<"signup" | "login">("signup");
 
   // Observe Firebase auth state
@@ -48,6 +50,10 @@ export default function Header() {
 
     return () => observer.disconnect();
   }, []);
+
+  if (pathname.startsWith("/dashboard")) {
+  return null;
+}
 
   return (
     <header className="sticky top-0 z-50 border-b border-gray-200 bg-white dark:bg-black px-6 py-4">

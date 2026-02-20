@@ -1,9 +1,18 @@
+"use client";
+
 import { Github } from "lucide-react";
 import Link from "next/link";
-
+import { usePathname } from "next/navigation";
 import { teamMembers } from "@/data/teamMembers";
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  
+  if (pathname.startsWith("/dashboard")) {
+    return null;
+  }
+
   return (
     <footer className="w-full border-t border-border">
       <div className="mx-auto px-4 sm:px-6 lg:px-24 py-6 flex flex-col gap-3 items-center text-center text-sm">
@@ -19,7 +28,6 @@ export default function Footer() {
             className="underline hover:no-underline"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Chingu V59 Team 37 GitHub Repository"
           >
             GitHub Project Repository
           </Link>
