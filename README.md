@@ -1,6 +1,6 @@
 # SkillPath - Chingu V59, Team 37
 <p align="center" />
-<img width="800" alt="hero shoot" src="./Hero Skillpath.png" />
+<img width="800" height="900" alt="hero shoot" src="Hero skillpath.png" />
 </p>
 
 
