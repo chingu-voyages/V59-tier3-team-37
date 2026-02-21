@@ -1,9 +1,25 @@
-# SkillPath - Chingu V59, Team 37
+# SkillPath
 <p align="center" />
-<img width="800" height="900" alt="hero shoot" src="Hero skillpath.png" />
+<img width="1000" height="1200" alt="hero shoot" src="Hero skillpath.png" />
 </p>
 
+ <p align="center">
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white" alt="TypeScript Badge"/>
+  <img src="https://img.shields.io/badge/Tailwind-06B6D4?style=flat&logo=tailwindcss&logoColor=white" alt="Tailwind Badge"/>
+  <img src="https://img.shields.io/badge/npm-CB3837?logo=npm&logoColor=fff" alt="Npm Badge"/>
+</p>
 
+<p align="center">
+  <img src="https://img.shields.io/badge/Node-43853D?style=flat&logo=node.js&logoColor=white" alt="Node.js Badge"/>
+  <img src="https://img.shields.io/badge/Express-000000?style=flat&logo=express&logoColor=white" alt="Express Badge"/>
+  <img src="https://img.shields.io/badge/Firebase-039BE5?logo=Firebase&logoColor=white" alt="firebase Badege"/>
+  <img src="https://img.shields.io/badge/Swagger-85EA2D?logo=insomnia&logoColor=000" alt="Swagger Badge"/>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Figma-F24E1E?logo=figma&logoColor=white" alt="figma badge"/>
+  <img src="https://custom-icon-badges.demolab.com/badge/Visual%20Studio%20Code-0078d7.svg?logo=vsc&logoColor=white" alt="VSC Badge"/>
+</p>
 
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
