@@ -1,3 +1,11 @@
+# SkillPath - Chingu V59, Team 37
+<p align="center" />
+<img width="800" alt="" src="" />
+</p>
+
+
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
@@ -36,11 +44,14 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 
-- Gerwyn Sim : [GitHub](https://github.com/Gerwyn1) / [LinkedIn](
-https://www.linkedin.com/in/gerwyn-sim-391305239/)
-- Bisola Ogunsina : [GitHub](https://github.com/skellynb) / [LinkedIn](https://www.linkedin.com/in/bisola-s-ogunsina/)
-- Shimin Chan: [Github](https://github.com/Natkuma01) / [LinkedIn](https://linkedin.com/in/natalie-chan-shimin/)
--Maheswari Kumar : [Github](https://github.com/MaheswariKumar) / [LinkedIn](https://www.linkedin.com/in/maheswari5kumar/)
-- Yusuf Mohsen: [Github](https://github.com/yusufmohsiin) / [LinkedIn](https://www.linkedin.com/in/yusuf-mohsiin/)
-- Fouad Tabbara: [Github](https://github.com/fmtabbara) / [LinkedIn](https://www.linkedin.com/in/fouad-tabbara-1b754461/)
-- Tonia Montgomery: [Github](https://github.com/MontgomeryT7294) / [LinkedIn](https://linkedin.com/in/tonia-montgomery/)
+## Team Members
+- Full-Stack Developers 
+  - Gerwyn Sim : [GitHub](https://github.com/Gerwyn1) / [LinkedIn](https://www.linkedin.com/in/gerwyn-sim-391305239/)
+  - Bisola Ogunsina : [GitHub](https://github.com/skellynb) / [LinkedIn](https://www.linkedin.com/in/bisola-s-ogunsina/)
+  - Shimin Chan: [Github](https://github.com/Natkuma01) / [LinkedIn](https://linkedin.com/in/natalie-chan-shimin/)
+  - Maheswari Kumar : [Github](https://github.com/MaheswariKumar) / [LinkedIn](https://www.linkedin.com/in/maheswari5kumar/)
+  - Fouad Tabbara: [Github](https://github.com/fmtabbara) / [LinkedIn](https://www.linkedin.com/in/fouad-tabbara-1b754461/)
+- UX/UI Designer
+  - Yusuf Mohsen: [Github](https://github.com/yusufmohsiin) / [LinkedIn](https://www.linkedin.com/in/yusuf-mohsiin/)
+- Scrum Master
+  - Tonia Montgomery: [Github](https://github.com/MontgomeryT7294) / [LinkedIn](https://linkedin.com/in/tonia-montgomery/)
