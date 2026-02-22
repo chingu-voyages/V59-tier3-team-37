@@ -8,7 +8,7 @@ import { useSessionStore } from "@/store/useSessionStore";
 import { Button } from "../ui/button";
 
 export default function AISummary({ getStarted }: { getStarted?: () => void }) {
-  const { selectedAnswers } = useSessionStore();
+  const { selectedAnswers, flashcards, role } = useSessionStore();
   const [feedback, setFeedback] = useState<string>("");
   const [loadingFeedback, setLoadingFeedback] = useState(false);
   const [error, setError] = useState<string>("");
@@ -49,18 +49,21 @@ export default function AISummary({ getStarted }: { getStarted?: () => void }) {
     fetchFeedback();
   }, [selectedAnswers]);
 
-  const total = selectedAnswers.length;
+  const total = flashcards.length;
+  const totalAnswered = selectedAnswers.length;
   const correct = selectedAnswers.filter(
     (q) => q.selectedOptionId === q.options.find((opt) => opt.isCorrect)?.id,
   ).length;
-  const incorrect = total - correct;
-  const accuracy = total ? Math.round((correct / total) * 100) : 0;
+  const incorrect = totalAnswered - correct;
+  const accuracy = totalAnswered
+    ? Math.round((correct / totalAnswered) * 100)
+    : 0;
 
   if (!selectedAnswers || selectedAnswers.length === 0) {
     return (
       <div className="flex flex-col gap-2">
         <h2>Answer a set of questions to see your performance summary. </h2>
-        <Button className="bg-indigo-500" size="lg" onClick={getStarted}>
+        <Button className="bg-blue-500" size="lg" onClick={getStarted}>
           Get started
         </Button>
       </div>
@@ -69,8 +72,10 @@ export default function AISummary({ getStarted }: { getStarted?: () => void }) {
 
   return (
     <div className="p-6 max-w-5xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">Performance Summary</h1>
-
+      <h1 className="text-2xl font-bold mb-2">Performance Summary</h1>
+      <h2 className="text-xl text-mist-700 capitalize font-bold mb-6">
+        Role: {role}
+      </h2>
       {/* Overall Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <SummaryCard title="Total Questions" value={total} />
