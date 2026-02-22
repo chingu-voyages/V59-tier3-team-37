@@ -60,7 +60,9 @@ export default function AISummary({ getStarted }: { getStarted?: () => void }) {
     return (
       <div className="flex flex-col gap-2">
         <h2>Answer a set of questions to see your performance summary. </h2>
-        <Button onClick={getStarted}>Get started</Button>
+        <Button className="bg-indigo-500" size="lg" onClick={getStarted}>
+          Get started
+        </Button>
       </div>
     ); // Don't render anything if there are no selected answers
   }

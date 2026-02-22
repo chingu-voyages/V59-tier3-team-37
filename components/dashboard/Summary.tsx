@@ -1,7 +1,7 @@
 import { getAuth } from "firebase/auth";
+import { PieChart } from "lucide-react";
 import Image from "next/image";
 import green_badge from "../../public/green_badge.png";
-import pie from "../../public/pie.png";
 import red_badge from "../../public/red_badge.png";
 import yellow_badge from "../../public/yellow_badge.png";
 import AISummary from "./AISummary";
@@ -20,17 +20,17 @@ export default function Summary({ totalScore, getStarted }: SummaryProps) {
   const { correct, total } = totalScore;
 
   return (
-    <div className="flex-1 p-8 overflow-auto">
+    <div className="flex-1 overflow-auto">
       <h1 className="text-5xl font-bold py-4 text-black">Hello, {userName}</h1>
-      <div className="bg-[#e0e0ff] rounded-3xl flex items-center gap-4 p-4">
-        <div className="flex-shrink-0">
-          <Image src={pie} alt="Pie" className="w-40 opacity-50" />
-        </div>
-        <div className="flex flex-col">
-          <h2 className="text-[#5b4df3] text-2xl font-bold">Your summary</h2>
-          <p className="text-[#8e8cb2] text-lg">
-            your general stats based on your learning sessions
-          </p>
+      <div className="bg-[#e0e0ff] rounded-3xl flex items-center justify-between p-16">
+        <div className="flex items-center gap-4">
+          <PieChart className="w-20 h-20 text-[#5b4df3] opacity-50" />
+          <div className="flex flex-col">
+            <h2 className="text-[#5b4df3] text-4xl font-bold">Your summary</h2>
+            <p className="text-[#8e8cb2] text-lg">
+              your general stats based on your learning sessions
+            </p>
+          </div>
         </div>
         <AISummary getStarted={getStarted} />
       </div>
