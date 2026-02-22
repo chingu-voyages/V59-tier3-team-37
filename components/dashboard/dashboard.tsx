@@ -19,8 +19,6 @@ export default function Dashboard() {
   const [activeTab, setActiveTab] = useState<"summary" | "roles" | "questions">(
     "summary",
   );
-  const [selectedRoles, setSelectedRoles] = useState<Set<string>>(new Set());
-  const [totalScore, setTotalScore] = useState({ correct: 0, total: 0 });
 
   // Auth check
   useEffect(() => {
@@ -46,11 +44,7 @@ export default function Dashboard() {
     }
   };
 
-  const handleCompleted = (correct: number, total: number) => {
-    setTotalScore((prev) => ({
-      correct: prev.correct + correct,
-      total: prev.total + total,
-    }));
+  const handleCompleted = () => {
     setActiveTab("summary");
   };
 
@@ -61,23 +55,17 @@ export default function Dashboard() {
         <Sidebar active={activeTab} onSelect={handleSelect} />
         <div className="flex-1 p-8 overflow-auto">
           {activeTab === "summary" && (
-            <Summary
-              totalScore={totalScore}
-              getStarted={() => setActiveTab("roles")}
-            />
+            <Summary getStarted={() => setActiveTab("roles")} />
           )}
           {activeTab === "roles" && (
             <Roles
-              selectedRoles={selectedRoles}
-              setSelectedRoles={setSelectedRoles}
-              onGenerate={() => setActiveTab("questions")}
+              onGenerate={() => {
+                setActiveTab("questions");
+              }}
             />
           )}
           {activeTab === "questions" && (
-            <Questions
-              selectedRoles={selectedRoles}
-              onCompleted={handleCompleted}
-            />
+            <Questions onCompleted={handleCompleted} />
           )}
         </div>
       </div>

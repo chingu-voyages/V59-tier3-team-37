@@ -1,29 +1,26 @@
 "use client";
-import { allRoles } from "@/lib/roleMap";
+
+import { useEffect } from "react";
+import { useSessionStore } from "@/store/useSessionStore";
+import type { Role } from "@/types";
 import { Button } from "../ui/button";
 
-interface RolesProps {
-  selectedRoles: Set<string>;
-  setSelectedRoles: React.Dispatch<React.SetStateAction<Set<string>>>;
-  onGenerate: () => void;
-}
+export default function Roles({ onGenerate }: { onGenerate: () => void }) {
+  const { role, setRole, getAvailableRoles, roles, setResettingSession } =
+    useSessionStore();
 
-export default function Roles({
-  selectedRoles,
-  setSelectedRoles,
-  onGenerate,
-}: RolesProps) {
+  useEffect(() => {
+    setResettingSession();
+    getAvailableRoles();
+  }, [getAvailableRoles, setResettingSession]);
+
   const handleGenerateQuestions = () => {
-    if (selectedRoles.size === 0) return alert("⚠️ Please select a Role!");
+    if (!role) return alert("⚠️ Please select a Role!");
     onGenerate();
   };
 
-  const handleCardClick = (role: string) => {
-    setSelectedRoles((prev) => {
-      const next = new Set(prev);
-      next.has(role) ? next.delete(role) : next.add(role);
-      return next;
-    });
+  const handleCardClick = (selectedRole: Role) => {
+    setRole(selectedRole);
   };
 
   return (
@@ -36,17 +33,17 @@ export default function Roles({
 
       <div className="max-w-5xl mx-auto p-6 flex flex-col gap-2">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {allRoles.map((role) => {
-            const isSelected = selectedRoles.has(role);
+          {roles.map((r) => {
+            const isSelected = role === r;
             return (
               <button
-                key={role}
+                key={r}
                 type="button"
-                onClick={() => handleCardClick(role)}
+                onClick={() => handleCardClick(r)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
-                    handleCardClick(role);
+                    handleCardClick(r);
                   }
                 }}
                 className={`h-28 w-full rounded-xl p-4 flex flex-col justify-center cursor-pointer transition-colors text-left
@@ -56,7 +53,7 @@ export default function Roles({
                   className={`text-xl font-semibold transition-colors
                     ${isSelected ? "text-white" : "text-indigo-900 hover:text-white"}`}
                 >
-                  {role}
+                  {r.charAt(0).toUpperCase() + r.slice(1)}
                 </h3>
               </button>
             );
