@@ -4,12 +4,14 @@ import green_badge from "../../public/green_badge.png";
 import pie from "../../public/pie.png";
 import red_badge from "../../public/red_badge.png";
 import yellow_badge from "../../public/yellow_badge.png";
+import AISummary from "./AISummary";
 
 interface SummaryProps {
   totalScore: { correct: number; total: number };
+  getStarted?: () => void;
 }
 
-export default function Summary({ totalScore }: SummaryProps) {
+export default function Summary({ totalScore, getStarted }: SummaryProps) {
   const auth = getAuth();
   const userName =
     auth?.currentUser?.displayName ||
@@ -20,8 +22,7 @@ export default function Summary({ totalScore }: SummaryProps) {
   return (
     <div className="flex-1 p-8 overflow-auto">
       <h1 className="text-5xl font-bold py-4 text-black">Hello, {userName}</h1>
-
-      <div className="bg-[#e0e0ff] rounded-3xl flex items-center gap-4">
+      <div className="bg-[#e0e0ff] rounded-3xl flex items-center gap-4 p-4">
         <div className="flex-shrink-0">
           <Image src={pie} alt="Pie" className="w-40 opacity-50" />
         </div>
@@ -31,6 +32,7 @@ export default function Summary({ totalScore }: SummaryProps) {
             your general stats based on your learning sessions
           </p>
         </div>
+        <AISummary getStarted={getStarted} />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">

@@ -1,7 +1,6 @@
 "use client";
-import Image from "next/image";
 import { allRoles } from "@/lib/roleMap";
-import generateQuestionButton from "@/public/generateQuestionButton.png";
+import { Button } from "../ui/button";
 
 interface RolesProps {
   selectedRoles: Set<string>;
@@ -35,7 +34,7 @@ export default function Roles({
       </p>
       <p className="flex justify-center py-4 text-lg">I am a...</p>
 
-      <div className="max-w-5xl mx-auto p-6">
+      <div className="max-w-5xl mx-auto p-6 flex flex-col gap-2">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {allRoles.map((role) => {
             const isSelected = selectedRoles.has(role);
@@ -63,16 +62,12 @@ export default function Roles({
             );
           })}
         </div>
-      </div>
-
-      <div className="flex justify-end mt-4">
-        <button type="button" onClick={handleGenerateQuestions}>
-          <Image
-            className="w-60 sm:w-72 md:w-80"
-            src={generateQuestionButton}
-            alt="Generate Questions"
-          />
-        </button>
+        <Button
+          className="bg-indigo-500 self-end "
+          onClick={handleGenerateQuestions}
+        >
+          Generate Questions
+        </Button>
       </div>
     </>
   );
