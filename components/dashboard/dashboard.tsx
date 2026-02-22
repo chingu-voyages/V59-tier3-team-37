@@ -60,7 +60,12 @@ export default function Dashboard() {
       <div className="flex flex-1">
         <Sidebar active={activeTab} onSelect={handleSelect} />
         <div className="flex-1 p-8 overflow-auto">
-          {activeTab === "summary" && <Summary totalScore={totalScore} />}
+          {activeTab === "summary" && (
+            <Summary
+              totalScore={totalScore}
+              getStarted={() => setActiveTab("roles")}
+            />
+          )}
           {activeTab === "roles" && (
             <Roles
               selectedRoles={selectedRoles}
