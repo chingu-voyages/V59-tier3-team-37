@@ -62,11 +62,6 @@ export const useSessionStore = create<SessionState>()(
           sessionEnded: null,
           selectedAnswers: [],
         });
-        Cookies.set("sessionStarted", "false", { path: "/" });
-        setTimeout(() => {
-          setTimeout(() => set({ sessionStarted: null }), 250);
-          redirect("/roles");
-        }, 1500);
       },
       setResettingSession: () => set({ resettingSession: false }),
       setSessionEnded: () => set({ sessionEnded: true, showWarning: false }),

@@ -1,7 +1,5 @@
 import { getAuth } from "firebase/auth";
 import { PieChart } from "lucide-react";
-import SummaryCard from "@/components/custom/summary-card/SummaryCard";
-import { useSessionStore } from "@/store/useSessionStore";
 import AISummary from "./AISummary";
 
 interface SummaryProps {
@@ -14,14 +12,6 @@ export default function Summary({ getStarted }: SummaryProps) {
     auth?.currentUser?.displayName ||
     auth?.currentUser?.email?.split("@")[0] ||
     "User";
-  const { selectedAnswers } = useSessionStore();
-
-  const total = selectedAnswers.length;
-  const correct = selectedAnswers.filter(
-    (q) => q.selectedOptionId === q.options.find((opt) => opt.isCorrect)?.id,
-  ).length;
-  const incorrect = total - correct;
-  const accuracy = total ? Math.round((correct / total) * 100) : 0;
 
   return (
     <div className="flex-1 overflow-auto">

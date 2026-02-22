@@ -6,8 +6,14 @@ import type { Role } from "@/types";
 import { Button } from "../ui/button";
 
 export default function Roles({ onGenerate }: { onGenerate: () => void }) {
-  const { role, setRole, getAvailableRoles, roles, setResettingSession } =
-    useSessionStore();
+  const {
+    role,
+    setRole,
+    resetSession,
+    getAvailableRoles,
+    roles,
+    setResettingSession,
+  } = useSessionStore();
 
   useEffect(() => {
     setResettingSession();
