@@ -72,7 +72,6 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## Team Members
 - Full-Stack Developers 
-  - Gerwyn Sim : [GitHub](https://github.com/Gerwyn1) / [LinkedIn](https://www.linkedin.com/in/gerwyn-sim-391305239/)
   - Bisola Ogunsina : [GitHub](https://github.com/skellynb) / [LinkedIn](https://www.linkedin.com/in/bisola-s-ogunsina/)
   - Shimin Chan: [Github](https://github.com/Natkuma01) / [LinkedIn](https://linkedin.com/in/natalie-chan-shimin/)
   - Maheswari Kumar : [Github](https://github.com/MaheswariKumar) / [LinkedIn](https://www.linkedin.com/in/maheswari5kumar/)
